@@ -1,8 +1,10 @@
 import {createContext, ReactNode, useState} from "react";
+import {client} from "../supabase/supabase";
+import {AuthResponse} from "@supabase/supabase-js";
 
-interface AuthContext {
+export interface AuthContextTypes {
     isAuth: boolean
-    loggedUserId: string | null
+    loggedUserId: string | undefined
     login: (email: string, password: string) => void
     register: (email: string, password: string) => void
     logout: () => void
@@ -12,12 +14,12 @@ interface AuthContextProvider {
     children: ReactNode
 }
 
-export const AuthContext = createContext<AuthContext>({
+export const AuthContext = createContext<AuthContextTypes>({
     isAuth: false,
-    loggedUserId: null,
-    login: (email, password) => {
+    loggedUserId: undefined,
+    login: () => {
     },
-    register: (email, password) => {
+    register: () => {
     },
     logout: () => {
     }
@@ -25,15 +27,30 @@ export const AuthContext = createContext<AuthContext>({
 
 const AuthContextProvider = ({children}: AuthContextProvider) => {
     const [isAuth, setIsAuth] = useState<boolean>(false)
-    const [loggedUserId, setLoggedUserId] = useState<string | null>(null)
+    const [loggedUserId, setLoggedUserId] = useState<string | undefined>(undefined)
 
-    const login = () => {
+    const login = async (email: string, password: string) => {
+        return await client.auth.signInWithPassword({
+            email: email,
+            password: password
+        }).then(async (response: AuthResponse) => {
+            setLoggedUserId(response.data.user?.id)
+            setIsAuth(true)
+        })
+
     }
 
-    const register = () => {
+    const register = async (email: string, password: string) => {
+        return await client.auth.signUp({
+            email: email,
+            password: password
+        })
     }
 
-    const logout = () => {
+    const logout = async () => {
+        return await client.auth.signOut().then(async () => {
+            setIsAuth(false)
+        })
     }
 
     const value = {
@@ -45,3 +62,5 @@ const AuthContextProvider = ({children}: AuthContextProvider) => {
     }
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
+
+export default AuthContextProvider

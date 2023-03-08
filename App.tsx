@@ -1,20 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {SafeAreaProvider} from "react-native-safe-area-context";
+import AuthContextProvider from "./src/store/auth-context";
+import RootMenu from "./src/components/menu/RootMenu";
+import React from "react";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const App: React.FC = () => {
+    return (
+        <SafeAreaProvider>
+            <AuthContextProvider>
+                <RootMenu/>
+            </AuthContextProvider>
+        </SafeAreaProvider>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
