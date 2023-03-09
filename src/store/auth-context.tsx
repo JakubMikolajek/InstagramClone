@@ -34,6 +34,7 @@ const AuthContextProvider = ({children}: AuthContextProvider) => {
             email: email,
             password: password
         }).then(async (response: AuthResponse) => {
+            console.log(response.data)
             setLoggedUserId(response.data.user?.id)
             setIsAuth(true)
         })
@@ -44,6 +45,8 @@ const AuthContextProvider = ({children}: AuthContextProvider) => {
         return await client.auth.signUp({
             email: email,
             password: password
+        }).then(async (response: AuthResponse) => {
+            console.log(response.data)
         })
     }
 

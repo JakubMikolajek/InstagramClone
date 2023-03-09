@@ -12,7 +12,7 @@ type GuessMenuParamList = {
 
 const Stack = createStackNavigator<GuessMenuParamList>()
 
-const GuessMenu: React.FC = () => {
+const GuessMenu = () => {
     return (
         <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen name="Welcome" component={WelcomeScreen} options={{

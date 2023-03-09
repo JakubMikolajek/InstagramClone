@@ -2,7 +2,6 @@ import {StyleSheet, Text} from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
 import CustomBtn from "../components/UI/CustomBtn";
 
-
 const WelcomeScreen = ({navigation}: any) => {
     return (
         <SafeAreaView style={styles.container}>

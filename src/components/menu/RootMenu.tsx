@@ -4,7 +4,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import GuessMenu from "./GuessMenu";
 import AuthMenu from "./AuthMenu";
 
-const RootMenu: React.FC = () => {
+const RootMenu = () => {
     const authCtx: AuthContextTypes = useContext(AuthContext)
     const isAuth: boolean = authCtx.isAuth
     return (
