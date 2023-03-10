@@ -3,14 +3,9 @@ import WelcomeScreen from "../../screens/WelcomeScreen";
 import LoginScreen from "../../screens/LoginScreen";
 import RegisterScreen from "../../screens/RegisterScreen";
 import React from "react";
+import {ParamListBase} from "@react-navigation/native";
 
-type GuessMenuParamList = {
-    Welcome: any,
-    Login: any,
-    Register: any
-}
-
-const Stack = createStackNavigator<GuessMenuParamList>()
+const Stack = createStackNavigator<ParamListBase>()
 
 const GuessMenu = () => {
     return (

@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native'
-import {AuthContext, AuthContextTypes} from "../../store/auth-context";
+import {AuthContext, AuthContextProps} from "../../store/auth-context";
 import {useContext} from "react";
 import InputController from "../UI/InputController";
 import {useForm} from "react-hook-form";
@@ -8,7 +8,7 @@ import {loginValidation} from "../../utils/validation";
 import CustomBtn from "../UI/CustomBtn";
 
 const LoginForm = () => {
-    const authCtx: AuthContextTypes = useContext(AuthContext)
+    const authCtx: AuthContextProps = useContext(AuthContext)
     const {control, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(loginValidation),
         defaultValues: {

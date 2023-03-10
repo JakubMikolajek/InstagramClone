@@ -2,7 +2,7 @@ import {createContext, ReactNode, useState} from "react";
 import {client} from "../supabase/supabase";
 import {AuthResponse} from "@supabase/supabase-js";
 
-export interface AuthContextTypes {
+export interface AuthContextProps {
     isAuth: boolean
     loggedUserId: string | undefined
     login: (email: string, password: string) => void
@@ -14,7 +14,7 @@ interface AuthContextProvider {
     children: ReactNode
 }
 
-export const AuthContext = createContext<AuthContextTypes>({
+export const AuthContext = createContext<AuthContextProps>({
     isAuth: false,
     loggedUserId: undefined,
     login: () => {

@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native'
 import React, {useContext} from "react";
-import {AuthContext, AuthContextTypes} from "../../store/auth-context";
+import {AuthContext, AuthContextProps} from "../../store/auth-context";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {registerValidation} from "../../utils/validation";
@@ -8,7 +8,7 @@ import InputController from "../UI/InputController";
 import CustomBtn from "../UI/CustomBtn";
 
 const RegisterForm = () => {
-    const authCtx: AuthContextTypes = useContext(AuthContext)
+    const authCtx: AuthContextProps = useContext(AuthContext)
     const {control, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(registerValidation),
         defaultValues: {
