@@ -39,8 +39,5 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginBottom: 32
-    },
-    outerContainer: {
-        flex: 1
     }
 })

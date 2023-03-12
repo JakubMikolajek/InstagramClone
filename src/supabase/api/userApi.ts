@@ -10,12 +10,6 @@ export const getUser = async (userId: string) => await client
     .eq("uuid", userId)
     .single()
 
-export const getLoggedInUser = async (loggedUserId: string) => client
-    .from("users")
-    .select("*")
-    .eq("uuid", loggedUserId)
-    .single()
-
 export const updateProfile = async (loggedUserId: string, firstName: string, lastName: string, imageUrl: string) => await client
     .from("users")
     .update({
