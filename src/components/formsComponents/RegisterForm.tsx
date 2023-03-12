@@ -6,8 +6,10 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {registerValidation} from "../../utils/validation";
 import InputController from "../UI/InputController";
 import CustomBtn from "../UI/CustomBtn";
+import {useNavigation} from "@react-navigation/native";
 
 const RegisterForm = () => {
+    const navigation: any = useNavigation()
     const authCtx: AuthContextProps = useContext(AuthContext)
     const {control, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(registerValidation),
@@ -17,6 +19,12 @@ const RegisterForm = () => {
             confirmPassword: ""
         }
     })
+
+    const register = (email: string, password: string) => {
+        authCtx.register(email, password)
+        navigation.goBack()
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
@@ -28,7 +36,7 @@ const RegisterForm = () => {
                                  placeholder="Confirm Password:"
                                  errors={errors.confirmPassword}/>
             </View>
-            <CustomBtn onPress={handleSubmit((values) => authCtx.register(values.email, values.password))}
+            <CustomBtn onPress={handleSubmit((values) => register(values.email, values.password))}
                        title="Sign in" fontSize={18}/>
         </View>
     )

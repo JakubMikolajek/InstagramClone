@@ -1,7 +1,7 @@
 import {Keyboard, KeyboardAvoidingView, Platform, StyleSheet, TouchableWithoutFeedback} from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
 import CustomBtn from "../components/UI/CustomBtn";
-import LoginForm from "../components/forms/LoginForm";
+import LoginForm from "../components/formsComponents/LoginForm";
 import Header from "../components/UI/Header";
 
 const LoginScreen = ({navigation}: any) => {

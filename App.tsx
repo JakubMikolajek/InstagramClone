@@ -1,9 +1,9 @@
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import AuthContextProvider from "./src/store/auth-context";
-import RootMenu from "./src/components/menu/RootMenu";
+import RootMenu from "./src/components/menuComponents/RootMenu";
 import React from "react";
 
-const App: React.FC = () => {
+const App = () => {
     return (
         <SafeAreaProvider>
             <AuthContextProvider>

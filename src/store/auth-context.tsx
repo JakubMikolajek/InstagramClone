@@ -4,7 +4,7 @@ import {AuthResponse} from "@supabase/supabase-js";
 
 export interface AuthContextProps {
     isAuth: boolean
-    loggedUserId: string | undefined
+    loggedUserId: any
     login: (email: string, password: string) => void
     register: (email: string, password: string) => void
     logout: () => void
@@ -16,7 +16,7 @@ interface AuthContextProvider {
 
 export const AuthContext = createContext<AuthContextProps>({
     isAuth: false,
-    loggedUserId: undefined,
+    loggedUserId: "",
     login: () => {
     },
     register: () => {
@@ -27,14 +27,13 @@ export const AuthContext = createContext<AuthContextProps>({
 
 const AuthContextProvider = ({children}: AuthContextProvider) => {
     const [isAuth, setIsAuth] = useState<boolean>(false)
-    const [loggedUserId, setLoggedUserId] = useState<string | undefined>(undefined)
+    const [loggedUserId, setLoggedUserId] = useState<any>("")
 
     const login = async (email: string, password: string) => {
         return await client.auth.signInWithPassword({
             email: email,
             password: password
         }).then(async (response: AuthResponse) => {
-            console.log(response.data)
             setLoggedUserId(response.data.user?.id)
             setIsAuth(true)
         })
@@ -45,8 +44,6 @@ const AuthContextProvider = ({children}: AuthContextProvider) => {
         return await client.auth.signUp({
             email: email,
             password: password
-        }).then(async (response: AuthResponse) => {
-            console.log(response.data)
         })
     }
 
