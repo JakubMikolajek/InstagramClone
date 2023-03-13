@@ -15,7 +15,7 @@ import {supabaseClient} from "../../supabase/supabase";
 import {colors} from "../../utils/globalStyles";
 
 const EditProfileForm = ({emptyUser, refetch, route}: any) => {
-    const [url, setUrl] = useState<any>(route.params.imageUrl)
+    const [url, setUrl] = useState<any>(route.params?.imageUrl)
     const [update, setUpdate] = useState<boolean>(false)
     const authCtx: AuthContextProps = useContext(AuthContext)
     const client = useQueryClient()
@@ -62,8 +62,11 @@ const EditProfileForm = ({emptyUser, refetch, route}: any) => {
         },
         onSuccess: async () => {
             await client.invalidateQueries(["user", authCtx.loggedUserId])
+            await client.invalidateQueries(["users"])
             refetch()
             if (!emptyUser) {
+                navigation.goBack()
+            }else {
                 navigation.goBack()
             }
         }

@@ -1,13 +1,14 @@
-import {StyleSheet, Text} from 'react-native'
+import {StyleSheet} from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useContext} from "react";
 import {AuthContext, AuthContextProps} from "../store/auth-context";
 import Loading from "../components/Loading";
-import EditUserDataScreen from "./EditUserDataScreen";
 import {fetchUserData} from "../hooks/fetchUserData";
 import {fetchAllUsersData} from "../hooks/fetchAllUsersData";
+import UsersList from "../components/usersComponents/userFlatList/UsersList";
+import CustomBtn from "../components/UI/CustomBtn";
 
-const DashboardScreen = () => {
+const DashboardScreen = ({navigation}: any) => {
     const authCtx: AuthContextProps = useContext(AuthContext)
 
     const {
@@ -15,7 +16,6 @@ const DashboardScreen = () => {
         isLoading: isLoadingUser,
     } = fetchUserData("user", authCtx.loggedUserId, true)
     const {
-        users,
         isLoading: isLoadingUsers
     } = fetchAllUsersData("users", true)
 
@@ -23,14 +23,18 @@ const DashboardScreen = () => {
         return <Loading/>
     }
     if (!user?.first_name || !user?.last_name || !user?.image_url) {
-        return <EditUserDataScreen/>
+        return <SafeAreaView style={styles.container}>
+            <CustomBtn onPress={() => navigation.navigate("UpdateOwnProfile", {
+                name: "Name",
+                surname: "Surname",
+                imageUrl: "https://aqqnzwqssgqpxvwlqmpy.supabase.co/storage/v1/object/public/images/default/1678734936369e9b7b16c-18c1-44a9-8ba4-a8105c57dd93.png"
+            })} title="Complete Your Profile" fontSize={14}/>
+        </SafeAreaView>
     }
-
-    console.log(users)
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text>DashboardScreen</Text>
+            <UsersList/>
         </SafeAreaView>
     )
 }

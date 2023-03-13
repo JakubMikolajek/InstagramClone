@@ -1,4 +1,5 @@
 import {StyleSheet, Text, TouchableOpacity,} from 'react-native'
+import {colors} from "../../utils/globalStyles";
 
 interface ButtonProps {
     onPress: () => void,
@@ -26,13 +27,13 @@ export default CustomBtn
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#63b8df",
+        backgroundColor: colors.lightBlue,
         borderRadius: 8,
         paddingVertical: 8,
         paddingHorizontal: 10
     },
     text: {
-        color: "#fff",
+        color: colors.white,
         fontWeight: "bold",
         alignSelf: "center"
     }
