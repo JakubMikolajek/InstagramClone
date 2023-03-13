@@ -13,7 +13,11 @@ const Avatar = ({name, surname, imageUrl, pressable}: AvatarProps) => {
     const navigation: any = useNavigation()
     return (
         <View style={styles.container}>
-            {pressable ? <Pressable onPress={() => navigation.navigate("UpdateOwnProfile")}>
+            {pressable ? <Pressable onPress={() => navigation.navigate("UpdateOwnProfile", {
+                name: name,
+                surname: surname,
+                imageUrl: imageUrl
+            })}>
                 <Image style={styles.image} resizeMode="contain"
                        source={imageUrl ? {uri: imageUrl} : require("../../../assets/userAvatarImage.png")}/>
             </Pressable> : <Image style={styles.image} resizeMode="contain"

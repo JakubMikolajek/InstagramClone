@@ -6,7 +6,7 @@ import {Database} from "../types/database";
 const supabaseUrl = ""
 const supabaseKey = ""
 
-export const client = createClient<Database>(supabaseUrl, supabaseKey, {
+export const supabaseClient = createClient<Database>(supabaseUrl, supabaseKey, {
     auth: {
         storage: AsyncStorage,
         autoRefreshToken: true,

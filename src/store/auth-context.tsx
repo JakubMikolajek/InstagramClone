@@ -1,5 +1,5 @@
 import {createContext, ReactNode, useState} from "react";
-import {client} from "../supabase/supabase";
+import {supabaseClient} from "../supabase/supabase";
 import {AuthResponse} from "@supabase/supabase-js";
 
 export interface AuthContextProps {
@@ -30,7 +30,7 @@ const AuthContextProvider = ({children}: AuthContextProvider) => {
     const [loggedUserId, setLoggedUserId] = useState<any>("")
 
     const login = async (email: string, password: string) => {
-        return await client.auth.signInWithPassword({
+        return await supabaseClient.auth.signInWithPassword({
             email: email,
             password: password
         }).then(async (response: AuthResponse) => {
@@ -41,14 +41,14 @@ const AuthContextProvider = ({children}: AuthContextProvider) => {
     }
 
     const register = async (email: string, password: string) => {
-        return await client.auth.signUp({
+        return await supabaseClient.auth.signUp({
             email: email,
             password: password
         })
     }
 
     const logout = async () => {
-        return await client.auth.signOut().then(async () => {
+        return await supabaseClient.auth.signOut().then(async () => {
             setIsAuth(false)
         })
     }

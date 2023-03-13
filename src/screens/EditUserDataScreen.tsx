@@ -6,7 +6,7 @@ import {useContext} from "react";
 import {AuthContext, AuthContextProps} from "../store/auth-context";
 import EditProfileForm from "../components/formsComponents/EditProfileForm";
 
-const EditUserDataScreen = () => {
+const EditUserDataScreen = ({route}:any) => {
     const authCtx: AuthContextProps = useContext(AuthContext)
     const {user, refetch} = fetchUserData("user", authCtx.loggedUserId, false)
 
@@ -17,7 +17,7 @@ const EditUserDataScreen = () => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <SafeAreaView style={styles.container}>
                     <Header title={emptyUser ? "Complete Your Profile" : "Edit Your Profile"}/>
-                    <EditProfileForm refetch={refetch} emptyUser={emptyUser}/>
+                    <EditProfileForm route={route} refetch={refetch} emptyUser={emptyUser}/>
                 </SafeAreaView>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>

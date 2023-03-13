@@ -1,19 +1,19 @@
-import {client} from "../supabase";
+import {supabaseClient} from "../supabase";
 
-export const getAllPosts = async () => await client
+export const getAllPosts = async () => await supabaseClient
     .from("posts")
     .select("*")
     .is("archived_at", null)
     .order("id", {ascending: false})
 
-export const getPost = async (postId: number) => await client
+export const getPost = async (postId: number) => await supabaseClient
     .from("posts")
     .select("*")
     .eq("id", postId)
     .is("archived_at", null)
     .single()
 
-export const createPost = async (description: string, imageUrl: string) => await client
+export const createPost = async (description: string, imageUrl: string) => await supabaseClient
     .from("posts")
     .insert({
         description: description,
@@ -22,7 +22,7 @@ export const createPost = async (description: string, imageUrl: string) => await
     .limit(1)
     .single()
 
-export const deletePost = async (postId: number) => await client
+export const deletePost = async (postId: number) => await supabaseClient
     .from("posts")
     .update({
         archived_at: new Date().toISOString()
@@ -30,7 +30,7 @@ export const deletePost = async (postId: number) => await client
     .eq("id", postId)
 
 
-export const createComment = async (postId: number, body: string) => await client
+export const createComment = async (postId: number, body: string) => await supabaseClient
     .from("comments")
     .insert({
         body: body,
@@ -39,12 +39,12 @@ export const createComment = async (postId: number, body: string) => await clien
     .limit(1)
     .single()
 
-export const deleteComment = async (commentId: number) => await client
+export const deleteComment = async (commentId: number) => await supabaseClient
     .from("comments")
     .delete()
     .eq("id", commentId)
 
-export const createLike = async (postId: number) => await client
+export const createLike = async (postId: number) => await supabaseClient
     .from("likes")
     .insert({
         post_id: postId
@@ -52,7 +52,7 @@ export const createLike = async (postId: number) => await client
     .limit(1)
     .single()
 
-export const deleteLike = async (likeId: number) => await client
+export const deleteLike = async (likeId: number) => await supabaseClient
     .from("likes")
     .delete()
     .eq("id", likeId)

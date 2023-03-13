@@ -3,17 +3,21 @@ import {StyleSheet, Text, TouchableOpacity,} from 'react-native'
 interface ButtonProps {
     onPress: () => void,
     title: string,
-    fontSize: number
+    fontSize: number,
+    margin?: number
 }
 
-const CustomBtn = ({onPress, title, fontSize}: ButtonProps) => {
-    const size = {
-        fontSize: fontSize
+const CustomBtn = ({onPress, title, fontSize, margin}: ButtonProps) => {
+    const font = {
+        fontSize: fontSize,
+    }
+    const style = {
+        margin: margin
     }
 
     return (
-        <TouchableOpacity style={styles.container} onPress={onPress}>
-            <Text style={[styles.text, size]}>{title}</Text>
+        <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+            <Text style={[styles.text, font]}>{title}</Text>
         </TouchableOpacity>
     )
 }
