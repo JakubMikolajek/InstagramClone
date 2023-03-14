@@ -3,12 +3,14 @@ import {fetchAllUsersData} from "../../../hooks/fetchAllUsersData";
 import SingleUser from "./SingleUser";
 import {useContext} from "react";
 import {AuthContext} from "../../../store/auth-context";
+import {colors} from "../../../utils/globalStyles";
+import {screenWidth} from "../../../utils/dimension";
 
 const UsersList = () => {
     const authCtx = useContext(AuthContext)
     const {
         users
-    } = fetchAllUsersData("users", true)
+    } = fetchAllUsersData(true)
 
     users?.forEach((item, i) => {
         if (item.uuid === authCtx.loggedUserId) {
@@ -43,6 +45,9 @@ export default UsersList
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignSelf: "flex-start"
+        width: screenWidth,
+        alignSelf: "flex-start",
+        borderBottomWidth: 1,
+        borderBottomColor: colors.grey
     }
 })

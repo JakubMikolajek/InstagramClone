@@ -1,9 +1,9 @@
 import {StyleSheet, View, Image, Text} from 'react-native'
+import InputController from "../UI/InputController";
+import CustomBtn from "../UI/CustomBtn";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {editProfileValidation} from "../../utils/validation";
-import InputController from "../UI/InputController";
-import CustomBtn from "../UI/CustomBtn";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {updateProfile} from "../../supabase/api/userApi";
 import {useContext, useState} from "react";
@@ -14,12 +14,12 @@ import {decode} from "base64-arraybuffer";
 import {supabaseClient} from "../../supabase/supabase";
 import {colors} from "../../utils/globalStyles";
 
-const EditProfileForm = ({emptyUser, refetch, route}: any) => {
+const EditProfileForm = ({refetch, route}: any) => {
     const [url, setUrl] = useState<any>(route.params?.imageUrl)
     const [update, setUpdate] = useState<boolean>(false)
     const authCtx: AuthContextProps = useContext(AuthContext)
     const client = useQueryClient()
-    const navigation = useNavigation()
+    const navigation: any = useNavigation()
     const {control, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(editProfileValidation),
         defaultValues: {
@@ -64,11 +64,7 @@ const EditProfileForm = ({emptyUser, refetch, route}: any) => {
             await client.invalidateQueries(["user", authCtx.loggedUserId])
             await client.invalidateQueries(["users"])
             refetch()
-            if (!emptyUser) {
-                navigation.goBack()
-            }else {
-                navigation.goBack()
-            }
+            navigation.goBack()
         }
     })
 

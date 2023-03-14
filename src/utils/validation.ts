@@ -12,7 +12,10 @@ export const registerValidation = yup.object().shape({
 })
 
 export const editProfileValidation = yup.object().shape({
-    name: yup.string(),
-    surname: yup.string(),
-    imageUrl: yup.string()
+    name: yup.string().required("Name is required"),
+    surname: yup.string().required("Surname is required"),
+})
+
+export const createPostValidation = yup.object().shape({
+    description: yup.string().required("Title is required")
 })

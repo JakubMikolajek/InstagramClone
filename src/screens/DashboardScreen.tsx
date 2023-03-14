@@ -7,6 +7,8 @@ import {fetchUserData} from "../hooks/fetchUserData";
 import {fetchAllUsersData} from "../hooks/fetchAllUsersData";
 import UsersList from "../components/usersComponents/userFlatList/UsersList";
 import CustomBtn from "../components/UI/CustomBtn";
+import {fetchAllPostsData} from "../hooks/fetchAllPostsData";
+import PostsList from "../components/postsComponents/postFlatList/PostsList";
 
 const DashboardScreen = ({navigation}: any) => {
     const authCtx: AuthContextProps = useContext(AuthContext)
@@ -14,12 +16,16 @@ const DashboardScreen = ({navigation}: any) => {
     const {
         user,
         isLoading: isLoadingUser,
-    } = fetchUserData("user", authCtx.loggedUserId, true)
+    } = fetchUserData(authCtx.loggedUserId, true)
+    const {
+        posts,
+        isLoading: isLoadingPosts
+    } = fetchAllPostsData(true)
     const {
         isLoading: isLoadingUsers
-    } = fetchAllUsersData("users", true)
+    } = fetchAllUsersData(true)
 
-    if (isLoadingUser || isLoadingUsers) {
+    if (isLoadingUser || isLoadingUsers || isLoadingPosts) {
         return <Loading/>
     }
     if (!user?.first_name || !user?.last_name || !user?.image_url) {
@@ -35,6 +41,7 @@ const DashboardScreen = ({navigation}: any) => {
     return (
         <SafeAreaView style={styles.container}>
             <UsersList/>
+            <PostsList/>
         </SafeAreaView>
     )
 }

@@ -10,7 +10,7 @@ const OwnProfileScreen = () => {
     const authCtx: AuthContextProps = useContext(AuthContext)
     const {
         user,
-    } = fetchUserData("user", authCtx.loggedUserId, false)
+    } = fetchUserData(authCtx.loggedUserId, false)
 
     const loggedUser = user
 

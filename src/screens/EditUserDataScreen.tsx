@@ -6,9 +6,9 @@ import {useContext} from "react";
 import {AuthContext, AuthContextProps} from "../store/auth-context";
 import EditProfileForm from "../components/formsComponents/EditProfileForm";
 
-const EditUserDataScreen = ({route}:any) => {
+const EditUserDataScreen = ({route}: any) => {
     const authCtx: AuthContextProps = useContext(AuthContext)
-    const {user, refetch} = fetchUserData("user", authCtx.loggedUserId, false)
+    const {user, refetch} = fetchUserData(authCtx.loggedUserId, false)
 
     const emptyUser = !user?.first_name || !user?.last_name || !user?.image_url
 
