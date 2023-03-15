@@ -7,14 +7,15 @@ const PostsList = () => {
         posts
     } = fetchAllPostsData(false)
 
-    const renderPost = (itemData: any) => {
-        const item = itemData.item
+    const renderPost = (postData: any) => {
+        const item = postData.item
         const postProps = {
-            creatorId: item.creator_uuid,
+            creator_uuid: item.creator_uuid,
             id: item.id,
-            imageUrl: item.image_url
+            image_url: item.image_url
         }
-        return <SinglePost {...postProps}/>
+
+        return <SinglePost {...postProps} />
     }
 
     return (

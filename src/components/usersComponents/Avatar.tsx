@@ -1,28 +1,28 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native'
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {colors} from "../../utils/globalStyles";
 import {useNavigation} from "@react-navigation/native";
 
 interface AvatarProps {
-    name: string | undefined | null
-    surname: string | undefined | null
-    imageUrl: string | undefined | null
+    first_name: string | undefined | null
+    last_name: string | undefined | null
+    image_url: string | undefined | null
     pressable: boolean
 }
 
-const Avatar = ({name, surname, imageUrl, pressable}: AvatarProps) => {
+const Avatar = ({first_name, last_name, image_url, pressable}: AvatarProps) => {
     const navigation: any = useNavigation()
     return (
         <View style={styles.container}>
-            {pressable ? <Pressable onPress={() => navigation.navigate("UpdateOwnProfile", {
-                name: name,
-                surname: surname,
-                imageUrl: imageUrl
+            {pressable ? <TouchableOpacity onPress={() => navigation.navigate("UpdateOwnProfile", {
+                name: first_name,
+                surname: last_name,
+                imageUrl: image_url
             })}>
                 <Image style={styles.image} resizeMode="contain"
-                       source={imageUrl ? {uri: imageUrl} : require("../../../assets/userAvatarImage.png")}/>
-            </Pressable> : <Image style={styles.image} resizeMode="contain"
-                                  source={imageUrl ? {uri: imageUrl} : require("../../../assets/userAvatarImage.png")}/>}
-            <Text style={styles.text}>{name ? name : "Name"} {surname ? surname : "Surname"}</Text>
+                       source={image_url ? {uri: image_url} : require("../../../assets/userAvatarImage.png")}/>
+            </TouchableOpacity> : <Image style={styles.image} resizeMode="contain"
+                                  source={image_url ? {uri: image_url} : require("../../../assets/userAvatarImage.png")}/>}
+            <Text style={styles.text}>{first_name ? first_name : "Name"} {last_name ? last_name : "Surname"}</Text>
         </View>
     )
 }

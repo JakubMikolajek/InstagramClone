@@ -7,6 +7,7 @@ import {createPostValidation} from "../../utils/validation";
 import InputController from "../UI/InputController";
 import CustomBtn from "../UI/CustomBtn";
 import {createPost} from "../../supabase/api/postApi";
+import {colors} from "../../utils/globalStyles";
 
 const CreatePostForm = () => {
     const client = useQueryClient()
@@ -35,8 +36,8 @@ const CreatePostForm = () => {
 
 
     return (
-        <View>
-            <View>
+        <View style={styles.container}>
+            <View style={styles.inputContainer}>
                 <InputController control={control} errors={errors.description} placeholder="Title:" name="description"/>
                 <InputController control={control} errors={errors.imgUrl} placeholder="ImgUrl" name="imgUrl"/>
             </View>
@@ -48,4 +49,21 @@ const CreatePostForm = () => {
 
 export default CreatePostForm
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        marginHorizontal: 8,
+        marginVertical: 16
+    },
+    inputContainer: {
+        marginBottom: 32,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    image: {
+        width: 125,
+        height: 125,
+        borderRadius: 75,
+        borderColor: colors.lightBlue,
+        borderWidth: 2
+    }
+})

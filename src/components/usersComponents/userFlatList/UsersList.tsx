@@ -12,24 +12,22 @@ const UsersList = () => {
         users
     } = fetchAllUsersData(true)
 
-    users?.forEach((item, i) => {
-        if (item.uuid === authCtx.loggedUserId) {
+    users?.forEach((user, i) => {
+        if (user.uuid === authCtx.loggedUserId) {
             users?.splice(i, 1)
-            users?.unshift(item)
+            users?.unshift(user)
         }
     })
 
-    const renderUser = (itemData: any) => {
-        const item = itemData.item
+    const renderUser = (userData: any) => {
+        const item = userData.item
         const userProps = {
-            name: item.first_name,
-            surname: item.last_name,
-            imageUrl: item.image_url
+            first_name: item.first_name,
+            last_name: item.last_name,
+            image_url: item.image_url,
+            uuid: item.uuid
         }
-        const pressHandler = () => {
-            console.log(item.uuid)
-        }
-        return <SingleUser onPress={pressHandler} {...userProps} />
+        return <SingleUser {...userProps} />
     }
 
     return (

@@ -1,19 +1,27 @@
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native'
 import {colors} from "../../../utils/globalStyles";
+import {useNavigation} from "@react-navigation/native";
 
 interface SingleUserProps {
-    onPress: () => void
-    name: string
-    surname: string
-    imageUrl: string
+    first_name: string
+    last_name: string
+    image_url: string
+    uuid: string
 }
 
-const SingleUser = ({onPress, name, surname, imageUrl}: SingleUserProps) => {
+const SingleUser = ({first_name, last_name, image_url, uuid}: SingleUserProps) => {
+    const navigation: any = useNavigation()
+    const goToUserProfileHandler = () => {
+        navigation.navigate("Profile", {
+            uuid: uuid
+        })
+    }
+
     return (
-        <TouchableOpacity style={styles.container} onPress={onPress}>
-            <Image source={{uri: imageUrl}} style={styles.image}/>
-            <Text style={styles.text}>{name}</Text>
-            <Text style={styles.text}>{surname}</Text>
+        <TouchableOpacity style={styles.container} onPress={goToUserProfileHandler}>
+            <Image source={{uri: image_url}} style={styles.image}/>
+            <Text style={styles.text}>{first_name}</Text>
+            <Text style={styles.text}>{last_name}</Text>
         </TouchableOpacity>
     )
 }

@@ -14,10 +14,15 @@ const OwnProfileScreen = () => {
 
     const loggedUser = user
 
+    const avatarProps = {
+        first_name: loggedUser?.first_name,
+        last_name: loggedUser?.last_name,
+        image_url: loggedUser?.image_url
+    }
+
     return (
         <SafeAreaView style={styles.container}>
-            <Avatar name={loggedUser?.first_name} surname={loggedUser?.last_name} imageUrl={loggedUser?.image_url}
-                    pressable={true}/>
+            <Avatar {...avatarProps} pressable={true}/>
             <CustomBtn onPress={() => authCtx.logout()} title="Logout" fontSize={16}/>
         </SafeAreaView>
     )
