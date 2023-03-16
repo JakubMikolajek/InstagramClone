@@ -3,6 +3,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {fetchAllUsersData} from "../hooks/fetchAllUsersData";
 import Avatar from "../components/usersComponents/Avatar";
 import {Database} from "../types/database";
+import PostGridList from "../components/postsComponents/postGridList/PostGridList";
 
 const ProfileScreen = ({route}: any) => {
     const {users} = fetchAllUsersData(false)
@@ -21,7 +22,7 @@ const ProfileScreen = ({route}: any) => {
                 <Avatar {...avatarProps} pressable={false}/>
             </View>
             <View style={styles.postsContainer}>
-                <Text>Test</Text>
+                <PostGridList user_id={user_id} enabled={true}/>
             </View>
         </SafeAreaView>
     )
@@ -35,12 +36,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
-    avatarContainer:{
-        flex:2,
-        justifyContent:"center",
-        alignItems:"center"
+    avatarContainer: {
+        flex: 3,
+        justifyContent: "center",
+        alignItems: "center"
     },
-    postsContainer:{
-        flex:5
+    postsContainer: {
+        flex: 6
     }
 })

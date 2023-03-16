@@ -6,6 +6,13 @@ export const getAllPosts = async () => await supabaseClient
     .is("archived_at", null)
     .order("id", {ascending: false})
 
+export const getAllUserPosts = async (userId: string) => await supabaseClient
+    .from("posts")
+    .select("*")
+    .eq("creator_uuid", userId)
+    .is("archived_at", null)
+    .order("id", {ascending: false})
+
 export const getPost = async (postId: number) => await supabaseClient
     .from("posts")
     .select("*")

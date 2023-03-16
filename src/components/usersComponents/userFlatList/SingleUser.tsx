@@ -1,6 +1,8 @@
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native'
 import {colors} from "../../../utils/globalStyles";
 import {useNavigation} from "@react-navigation/native";
+import {AuthContext, AuthContextProps} from "../../../store/auth-context";
+import {useContext} from "react";
 
 interface SingleUserProps {
     first_name: string
@@ -10,11 +12,16 @@ interface SingleUserProps {
 }
 
 const SingleUser = ({first_name, last_name, image_url, uuid}: SingleUserProps) => {
+    const authCtx:AuthContextProps = useContext(AuthContext)
     const navigation: any = useNavigation()
     const goToUserProfileHandler = () => {
-        navigation.navigate("Profile", {
-            uuid: uuid
-        })
+        if (authCtx.loggedUserId === uuid){
+            navigation.navigate("OwnProfile")
+        }else {
+            navigation.navigate("Profile", {
+                uuid: uuid
+            })
+        }
     }
 
     return (

@@ -1,10 +1,11 @@
-import {StyleSheet} from 'react-native'
+import {StyleSheet, View} from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
 import CustomBtn from "../components/UI/CustomBtn";
 import {useContext} from "react";
 import {AuthContext, AuthContextProps} from "../store/auth-context";
 import Avatar from "../components/usersComponents/Avatar";
 import {fetchUserData} from "../hooks/fetchUserData";
+import PostGridList from "../components/postsComponents/postGridList/PostGridList";
 
 const OwnProfileScreen = () => {
     const authCtx: AuthContextProps = useContext(AuthContext)
@@ -22,8 +23,13 @@ const OwnProfileScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Avatar {...avatarProps} pressable={true}/>
-            <CustomBtn onPress={() => authCtx.logout()} title="Logout" fontSize={16}/>
+            <View style={styles.avatarContainer}>
+                <Avatar {...avatarProps} pressable={true}/>
+                <CustomBtn onPress={() => authCtx.logout()} title="Logout" fontSize={16}/>
+            </View>
+            <View style={styles.postsContainer}>
+                <PostGridList user_id={authCtx.loggedUserId} enabled={false}/>
+            </View>
         </SafeAreaView>
     )
 }
@@ -35,5 +41,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center"
+    },
+    avatarContainer: {
+        flex: 3
+    },
+    postsContainer: {
+        flex: 6
     }
 })

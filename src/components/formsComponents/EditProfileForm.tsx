@@ -30,9 +30,13 @@ const EditProfileForm = ({refetch, route}: any) => {
 
     const uploadImage = async (image: any, userId: any) => {
         const imageId = Date.now().toString() + userId
-        await supabaseClient.storage.from("images").upload(`${userId}/${imageId}.png`, decode(image), {
-            contentType: 'image/png'
-        })
+        await supabaseClient
+            .storage
+            .from("images")
+            .upload(`${userId}/${imageId}.png`,
+                decode(image), {
+                    contentType: 'image/png'
+                })
         const {data} = supabaseClient.storage.from("images").getPublicUrl(`${userId}/${imageId}.png`)
         setUrl(data?.publicUrl)
     }
@@ -42,6 +46,7 @@ const EditProfileForm = ({refetch, route}: any) => {
         let res = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
+            aspect: [1, 1],
             quality: 0.5,
             base64: true,
         })
