@@ -1,51 +1,56 @@
-import {StyleSheet, View} from 'react-native'
-import {SafeAreaView} from "react-native-safe-area-context";
+import React, { useContext } from "react";
+import { StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import CustomBtn from "../components/UI/CustomBtn";
-import {useContext} from "react";
-import {AuthContext, AuthContextProps} from "../store/auth-context";
+import { AuthContext, AuthContextProps } from "../store/auth-context";
 import Avatar from "../components/usersComponents/Avatar";
-import {fetchUserData} from "../hooks/fetchUserData";
+import { fetchUserData } from "../hooks/fetchUserData";
 import PostGridList from "../components/postsComponents/postGridList/PostGridList";
+import { fetchUserPosts } from "../hooks/fetchUserPosts";
 
 const OwnProfileScreen = () => {
-    const authCtx: AuthContextProps = useContext(AuthContext)
-    const {
-        user,
-    } = fetchUserData(authCtx.loggedUserId, false)
+  const authCtx: AuthContextProps = useContext(AuthContext);
+  const { user } = fetchUserData(authCtx.loggedUserId, false);
 
-    const loggedUser = user
+  const { posts } = fetchUserPosts(authCtx.loggedUserId, false);
 
-    const avatarProps = {
-        first_name: loggedUser?.first_name,
-        last_name: loggedUser?.last_name,
-        image_url: loggedUser?.image_url
-    }
+  const loggedUser = user;
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.avatarContainer}>
-                <Avatar {...avatarProps} pressable={true}/>
-                <CustomBtn onPress={() => authCtx.logout()} title="Logout" fontSize={16}/>
-            </View>
-            <View style={styles.postsContainer}>
-                <PostGridList user_id={authCtx.loggedUserId} enabled={false}/>
-            </View>
-        </SafeAreaView>
-    )
-}
+  const avatarProps = {
+    first_name: loggedUser?.first_name,
+    last_name: loggedUser?.last_name,
+    image_url: loggedUser?.image_url,
+  };
 
-export default OwnProfileScreen
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.avatarContainer}>
+        <Avatar {...avatarProps} pressable={true} />
+        <CustomBtn
+          onPress={() => authCtx.logout()}
+          title="Logout"
+          fontSize={16}
+        />
+      </View>
+      <View style={styles.postsContainer}>
+        <PostGridList posts={posts} />
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default OwnProfileScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    avatarContainer: {
-        flex: 3
-    },
-    postsContainer: {
-        flex: 6
-    }
-})
+  avatarContainer: {
+    flex: 3,
+  },
+  container: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+  postsContainer: {
+    flex: 6,
+  },
+});

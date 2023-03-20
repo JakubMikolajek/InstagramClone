@@ -1,19 +1,19 @@
-import {StyleSheet, Text} from 'react-native'
+import React from "react";
+import { StyleSheet, Text } from "react-native";
 
 interface HeaderProps {
-    title: string
+  title: string;
 }
 
-const Header = ({title}: HeaderProps) => {
-    return <Text style={styles.text}>{title}</Text>
+const Header = ({ title }: HeaderProps) => {
+  return <Text style={styles.text}>{title}</Text>;
+};
 
-}
-
-export default Header
+export default Header;
 
 const styles = StyleSheet.create({
-    text: {
-        fontSize: 24,
-        fontWeight: "600"
-    }
-})
+  text: {
+    fontSize: 24,
+    fontWeight: "600",
+  },
+});

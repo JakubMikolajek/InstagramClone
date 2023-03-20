@@ -1,47 +1,58 @@
-import {StyleSheet, Text, View} from 'react-native'
-import {SafeAreaView} from "react-native-safe-area-context";
-import {fetchAllUsersData} from "../hooks/fetchAllUsersData";
+import React, { useState } from "react";
+import { StyleSheet, Switch, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { fetchAllUsersData } from "../hooks/fetchAllUsersData";
 import Avatar from "../components/usersComponents/Avatar";
-import {Database} from "../types/database";
 import PostGridList from "../components/postsComponents/postGridList/PostGridList";
+import { fetchUserPosts } from "../hooks/fetchUserPosts";
+import Loading from "../components/Loading";
+import PostsList from "../components/postsComponents/postFlatList/PostsList";
 
-const ProfileScreen = ({route}: any) => {
-    const {users} = fetchAllUsersData(false)
-    const user_id = route.params.uuid
-    const user = users?.find((user) => user.uuid === user_id)
+const ProfileScreen = ({ route }: any) => {
+  const [enable, setEnable] = useState<boolean>(false);
+  const toggleSwitch = () => setEnable((prevState) => !prevState);
+  const { users } = fetchAllUsersData(false);
+  const user_id = route.params.uuid;
+  const user = users?.find((user) => user.uuid === user_id);
+  const { posts, isLoading } = fetchUserPosts(user_id, true);
 
-    const avatarProps = {
-        first_name: user?.first_name,
-        last_name: user?.last_name,
-        image_url: user?.image_url
-    }
+  if (isLoading) {
+    return <Loading />;
+  }
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.avatarContainer}>
-                <Avatar {...avatarProps} pressable={false}/>
-            </View>
-            <View style={styles.postsContainer}>
-                <PostGridList user_id={user_id} enabled={true}/>
-            </View>
-        </SafeAreaView>
-    )
-}
+  const avatarProps = {
+    first_name: user?.first_name,
+    last_name: user?.last_name,
+    image_url: user?.image_url,
+  };
 
-export default ProfileScreen
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.avatarContainer}>
+        <Avatar {...avatarProps} pressable={false} />
+      </View>
+      <View style={styles.postsContainer}>
+        <Switch onValueChange={toggleSwitch} value={enable} />
+        {enable ? <PostsList posts={posts} /> : <PostGridList posts={posts} />}
+      </View>
+    </SafeAreaView>
+  );
+};
+
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    avatarContainer: {
-        flex: 3,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    postsContainer: {
-        flex: 6
-    }
-})
+  avatarContainer: {
+    alignItems: "center",
+    flex: 3,
+    justifyContent: "center",
+  },
+  container: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+  },
+  postsContainer: {
+    flex: 6,
+  },
+});

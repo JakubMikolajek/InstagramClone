@@ -1,43 +1,39 @@
-import {FlatList, StyleSheet, View} from 'react-native'
-import {fetchUserPosts} from "../../../hooks/fetchUserPosts";
-import Loading from "../../Loading";
+import React from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 import SingleGridPost from "./SingleGridPost";
-import {screenWidth} from "../../../utils/dimension";
+import { screenWidth } from "../../../utils/dimension";
 
 interface PostGridListProps {
-    user_id: string
-    enabled: boolean
+  posts: any;
 }
 
-const PostGridList = ({user_id, enabled}: PostGridListProps) => {
-    const {posts, isLoading} = fetchUserPosts(user_id, enabled)
+const PostGridList = ({ posts }: PostGridListProps) => {
+  const renderGridPost = (postData: any) => {
+    const post = postData.item;
+    const postProps = {
+      id: post.id,
+      image_url: post.image_url,
+    };
+    return <SingleGridPost {...postProps} />;
+  };
 
-    if (isLoading) {
-        return <Loading/>
-    }
+  return (
+    <View style={styles.flatList}>
+      <FlatList
+        data={posts}
+        keyExtractor={(item: any) => item.id}
+        renderItem={renderGridPost}
+        numColumns={3}
+      />
+    </View>
+  );
+};
 
-    const renderGridPost = (postData: any) => {
-        const post = postData.item
-        const postProps = {
-            id: post.id,
-            image_url: post.image_url
-        }
-        return <SingleGridPost {...postProps}/>
-    }
-
-    return (
-        <View style={styles.flatList}>
-            <FlatList data={posts} keyExtractor={(item: any) => item.id} renderItem={renderGridPost} numColumns={3}/>
-        </View>
-    )
-}
-
-export default PostGridList
+export default PostGridList;
 
 const styles = StyleSheet.create({
-    flatList: {
-        width: screenWidth,
-        justifyContent: "flex-start"
-
-    }
-})
+  flatList: {
+    justifyContent: "flex-start",
+    width: screenWidth,
+  },
+});

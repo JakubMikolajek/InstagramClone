@@ -1,13 +1,14 @@
-import {Ionicons} from "@expo/vector-icons"
+import React from "react";
+import { Ionicons } from "@expo/vector-icons";
+
 interface IconProps {
-    name: any
-    size: number
-    color: string
+  name: any;
+  size: number;
+  color: string;
 }
 
-const Icon = ({name, size, color}: IconProps) => {
-    return <Ionicons name={name} size={size} color={color}/>
-}
+const Icon = ({ name, size, color }: IconProps) => {
+  return <Ionicons name={name} size={size} color={color} />;
+};
 
-export default Icon
-
+export default Icon;
