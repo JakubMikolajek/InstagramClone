@@ -48,6 +48,7 @@ const SinglePost = ({ id }: any) => {
 
   const postData = post?.data;
   const postLikes = postData.likes;
+  const lastComment = postData.comments[postData.comments.length - 1];
 
   const postOwner: any = users?.find(
     (user: any) => user.uuid === postData.creator_uuid
@@ -101,7 +102,11 @@ const SinglePost = ({ id }: any) => {
       <View style={styles.commentContainer}>
         <Text>Title: {postData.description}</Text>
         <Text>Likes: {countLikes}</Text>
-        <Text>Last comment: No one has commented this post yet</Text>
+        <Text>
+          {!lastComment
+            ? "Last comment: No one has commented this post yet"
+            : `Last comment: ${lastComment.body}`}
+        </Text>
       </View>
     </View>
   );

@@ -2,14 +2,22 @@ import React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { screenWidth } from "../../../utils/dimension";
 import { useNavigation } from "@react-navigation/native";
+import { fetchPost } from "../../../hooks/fetchPost";
 
 interface SingleGridProps {
-  id: string;
-  image_url: string;
+  id: number;
 }
 
-const SingleGridPost = ({ id, image_url }: SingleGridProps) => {
+const SingleGridPost = ({ id }: SingleGridProps) => {
   const navigation: any = useNavigation();
+  const { post, isLoading }: any = fetchPost(id, true);
+
+  if (isLoading) {
+    return null;
+  }
+
+  const postData = post?.data;
+
   const goToPostDetail = () => {
     navigation.navigate("PostDetail", {
       id: id,
@@ -18,7 +26,7 @@ const SingleGridPost = ({ id, image_url }: SingleGridProps) => {
 
   return (
     <TouchableOpacity style={styles.container} onPress={goToPostDetail}>
-      <Image style={styles.image} source={{ uri: image_url }} />
+      <Image style={styles.image} source={{ uri: postData.image_url }} />
     </TouchableOpacity>
   );
 };

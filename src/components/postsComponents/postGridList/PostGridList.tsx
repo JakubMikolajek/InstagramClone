@@ -8,14 +8,9 @@ interface PostGridListProps {
 }
 
 const PostGridList = ({ posts }: PostGridListProps) => {
-  const renderGridPost = (postData: any) => {
-    const post = postData.item;
-    const postProps = {
-      id: post.id,
-      image_url: post.image_url,
-    };
-    return <SingleGridPost {...postProps} />;
-  };
+  const renderGridPost = (postData: any) => (
+    <SingleGridPost id={postData.item.id} />
+  );
 
   return (
     <View style={styles.flatList}>
