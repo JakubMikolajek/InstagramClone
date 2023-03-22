@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomBtn from "../components/UI/CustomBtn";
 import { AuthContext, AuthContextProps } from "../store/auth-context";
-import Avatar from "../components/usersComponents/Avatar";
+import Avatar from "../components/UI/Avatar";
 import { fetchUserData } from "../hooks/fetchUserData";
 import PostGridList from "../components/postsComponents/postGridList/PostGridList";
 import { fetchUserPosts } from "../hooks/fetchUserPosts";

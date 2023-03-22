@@ -11,7 +11,7 @@ export const getSinglePost = async (id: number) =>
   await supabaseClient
     .from("posts")
     .select(
-      "id, creator_uuid, description, image_url, likes(post_id, creator_uuid, id), comments ( body, creator_uuid, id )"
+      "id, creator_uuid, description, image_url, likes(post_id, creator_uuid, id), comments ( body, creator_uuid, id, post_id )"
     )
     .eq("id", id)
     .single();

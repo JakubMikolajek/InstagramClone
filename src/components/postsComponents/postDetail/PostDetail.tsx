@@ -2,53 +2,18 @@ import React, { useContext } from "react";
 import { AuthContext, AuthContextProps } from "../../../store/auth-context";
 import { fetchAllUsersData } from "../../../hooks/fetchAllUsersData";
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Button,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Icon from "../../UI/Icon";
-import { colors } from "../../../utils/globalStyles";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { screenWidth } from "../../../utils/dimension";
 import { fetchPost } from "../../../hooks/fetchPost";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createLike, deleteLike } from "../../../supabase/api/postApi";
 import CommentsFlatlist from "./CommentsFlatlist";
+import PostAvatar from "../../UI/PostAvatar";
+import LikeHeart from "../../UI/LikeHeart";
+import Icon from "../../UI/Icon";
+import { colors } from "../../../utils/globalStyles";
+import CommentForm from "../../formsComponents/CommentForm";
 
 const PostDetail = ({ id }: any) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
-  const client = useQueryClient();
-
-  const addLikeMutation = useMutation({
-    mutationFn: () => {
-      return createLike(id);
-    },
-    onError: () => {
-      console.log("Error");
-    },
-    onSuccess: async () => {
-      await client.invalidateQueries(["posts", id]);
-    },
-  });
-
-  const removeLikeMutation = useMutation({
-    mutationFn: () => {
-      return deleteLike(ownLike.id);
-    },
-    onError: () => {
-      console.log("Error");
-    },
-    onSuccess: async () => {
-      await client.invalidateQueries(["posts", id]);
-    },
-  });
-
-  const addLike = () => addLikeMutation.mutate();
-  const removeLike = () => removeLikeMutation.mutate();
-
   const { post }: any = fetchPost(id, false);
   const { users } = fetchAllUsersData(false);
   const postData = post?.data;
@@ -68,29 +33,26 @@ const PostDetail = ({ id }: any) => {
         <Image style={styles.image} source={{ uri: postData.image_url }} />
       </View>
       <View style={styles.postDetailContainer}>
-        <View>
-          <Text style={styles.center}>Title: {postData.description}</Text>
-        </View>
+        <Text style={styles.center}>Title: {postData.description}</Text>
         <View style={styles.flexRow}>
-          <View style={styles.userContainer}>
-            <Image
-              style={styles.userImage}
-              source={{ uri: postOwner.image_url }}
-            />
-            <Text>
-              {postOwner.first_name} {postOwner.last_name}
-            </Text>
-          </View>
+          <PostAvatar
+            first_name={postOwner.first_name}
+            last_name={postOwner.last_name}
+            image_url={postOwner.image_url}
+            pressable={false}
+          />
           <View>
-            {ownPost ? null : (
-              <TouchableOpacity onPress={ownLike ? removeLike : addLike}>
-                <Icon
-                  name={ownLike ? "heart" : "heart-outline"}
-                  size={35}
-                  color={colors.lightBlue}
-                />
-              </TouchableOpacity>
-            )}
+            {ownPost ? null : <LikeHeart ownLike={ownLike} id={id} />}
+          </View>
+        </View>
+        <View style={styles.flexRowAlt}>
+          <View style={styles.flexRowAlt}>
+            <Icon name="heart" size={25} color={colors.lightBlue} />
+            <Text>Likes: {postLikes.length}</Text>
+          </View>
+          <View style={styles.flexRowAlt}>
+            <Icon name="chatbubble" size={25} color={colors.lightBlue} />
+            <Text>Comments: {postComments.length}</Text>
           </View>
         </View>
         <View style={styles.commentsContainer}>
@@ -102,8 +64,8 @@ const PostDetail = ({ id }: any) => {
             <CommentsFlatlist comments={postComments} />
           )}
         </View>
-        <View>
-          <Button title="Test" />
+        <View style={styles.commentFormContainer}>
+          <CommentForm id={id} />
         </View>
       </View>
     </SafeAreaView>
@@ -116,17 +78,25 @@ const styles = StyleSheet.create({
   center: {
     alignSelf: "center",
   },
-  commentsContainer: {},
+  commentFormContainer: { flex: 3 },
+  commentsContainer: { flex: 3 },
   container: {
     flex: 1,
   },
   flexRow: {
     alignItems: "center",
     flexDirection: "row",
+    flex: 1,
     height: 50,
     justifyContent: "space-between",
     marginHorizontal: 8,
     marginVertical: 4,
+  },
+  flexRowAlt: {
+    alignItems: "center",
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-around",
   },
   image: {
     height: screenWidth,
@@ -140,14 +110,5 @@ const styles = StyleSheet.create({
   postDetailContainer: {
     flex: 1,
     justifyContent: "flex-start",
-  },
-  userContainer: {
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  userImage: {
-    borderRadius: 25,
-    height: 50,
-    width: 50,
   },
 });

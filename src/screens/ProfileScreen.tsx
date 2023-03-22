@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Switch, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchAllUsersData } from "../hooks/fetchAllUsersData";
-import Avatar from "../components/usersComponents/Avatar";
+import Avatar from "../components/UI/Avatar";
 import PostGridList from "../components/postsComponents/postGridList/PostGridList";
 import { fetchUserPosts } from "../hooks/fetchUserPosts";
 import Loading from "../components/Loading";

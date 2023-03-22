@@ -1,44 +1,16 @@
 import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createLike, deleteLike } from "../../../supabase/api/postApi";
 import { fetchAllUsersData } from "../../../hooks/fetchAllUsersData";
 import { AuthContext, AuthContextProps } from "../../../store/auth-context";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "../../UI/Icon";
 import { screenWidth } from "../../../utils/dimension";
-import { colors } from "../../../utils/globalStyles";
 import { fetchPost } from "../../../hooks/fetchPost";
+import PostAvatar from "../../UI/PostAvatar";
+import LikeHeart from "../../UI/LikeHeart";
 
 const SinglePost = ({ id }: any) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
   const navigation: any = useNavigation();
-  const client = useQueryClient();
-
-  const addLikeMutation = useMutation({
-    mutationFn: () => {
-      return createLike(id);
-    },
-    onError: () => {
-      console.log("Error");
-    },
-    onSuccess: async () => {
-      await client.invalidateQueries(["posts", id]);
-    },
-  });
-  const removeLikeMutation = useMutation({
-    mutationFn: () => {
-      return deleteLike(ownLike.id);
-    },
-    onError: () => {
-      console.log("Error");
-    },
-    onSuccess: async () => {
-      await client.invalidateQueries(["posts", id]);
-    },
-  });
-  const addLike = () => addLikeMutation.mutate();
-  const removeLike = () => removeLikeMutation.mutate();
 
   const { post, isLoading }: any = fetchPost(id, true);
   const { users }: any = fetchAllUsersData(false);
@@ -74,27 +46,14 @@ const SinglePost = ({ id }: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.userContainer}>
-        <TouchableOpacity
-          style={styles.userInnerContainer}
+        <PostAvatar
+          first_name={postOwner.first_name}
+          last_name={postOwner.last_name}
+          image_url={postOwner.image_url}
           onPress={goToUserProfileHandler}
-        >
-          <Image
-            style={styles.userImage}
-            source={{ uri: postOwner.image_url }}
-          />
-          <Text>
-            {postOwner.first_name} {postOwner.last_name}
-          </Text>
-        </TouchableOpacity>
-        {ownPost ? null : (
-          <TouchableOpacity onPress={ownLike ? removeLike : addLike}>
-            <Icon
-              name={ownLike ? "heart" : "heart-outline"}
-              size={35}
-              color={colors.lightBlue}
-            />
-          </TouchableOpacity>
-        )}
+          pressable={true}
+        />
+        {ownPost ? null : <LikeHeart ownLike={ownLike} id={id} />}
       </View>
       <TouchableOpacity onPress={goToPostDetailsHandler}>
         <Image style={styles.image} source={{ uri: postData.image_url }} />
@@ -136,14 +95,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginHorizontal: 8,
     marginVertical: 4,
-  },
-  userImage: {
-    borderRadius: 25,
-    height: 50,
-    width: 50,
-  },
-  userInnerContainer: {
-    alignItems: "center",
-    flexDirection: "row",
   },
 });

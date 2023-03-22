@@ -34,3 +34,7 @@ export const editProfileValidation = yup.object().shape({
 export const createPostValidation = yup.object().shape({
   description: yup.string().required("Title is required"),
 });
+
+export const createCommentValidation = yup.object().shape({
+  body: yup.string(),
+});
