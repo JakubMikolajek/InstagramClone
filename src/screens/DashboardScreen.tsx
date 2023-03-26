@@ -10,20 +10,33 @@ import CustomBtn from "../components/UI/CustomBtn";
 import { fetchAllPostsData } from "../hooks/fetchAllPostsData";
 import PostsList from "../components/postsComponents/postFlatList/PostsList";
 import { fetchUserPosts } from "../hooks/fetchUserPosts";
+import { colors } from "../utils/globalStyles";
 
 const DashboardScreen = ({ navigation }: any) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
 
-  const { user, isLoading: isLoadingUser } = fetchUserData(
-    authCtx.loggedUserId,
-    true
-  );
-  const { posts, isLoading: isLoadingPosts } = fetchAllPostsData(true);
-  const { isLoading: isLoadingUsers } = fetchAllUsersData(true);
-  const { isLoading: isLoadingUserPosts } = fetchUserPosts(
-    authCtx.loggedUserId,
-    true
-  );
+  const {
+    user,
+    isLoading: isLoadingUser,
+    isRefetching: isRefetchingUser,
+    refetch: refetchUser,
+  } = fetchUserData(authCtx.loggedUserId, true);
+  const {
+    posts,
+    isLoading: isLoadingPosts,
+    isRefetching: isRefetchingPosts,
+    refetch: refetchPosts,
+  } = fetchAllPostsData(true);
+  const {
+    isLoading: isLoadingUsers,
+    isRefetching: isRefetchingUsers,
+    refetch: refetchUsers,
+  } = fetchAllUsersData(true);
+  const {
+    isLoading: isLoadingUserPosts,
+    isRefetching: isRefetchingUserPosts,
+    refetch: refetchUserPosts,
+  } = fetchUserPosts(authCtx.loggedUserId, true);
 
   if (isLoadingUser || isLoadingUsers || isLoadingPosts || isLoadingUserPosts) {
     return <Loading />;
@@ -42,14 +55,28 @@ const DashboardScreen = ({ navigation }: any) => {
           }
           title="Complete Your Profile"
           fontSize={14}
+          color={colors.lightBlue}
         />
       </SafeAreaView>
     );
   }
 
+  const isRefetching: boolean =
+    isRefetchingUser ||
+    isRefetchingUsers ||
+    isRefetchingUserPosts ||
+    isRefetchingPosts;
+
+  const refetch = () => {
+    refetchUser();
+    refetchUsers();
+    refetchPosts();
+    refetchUserPosts;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <UsersList />
+      <UsersList isRefetching={isRefetching} refetch={refetch} />
       <PostsList posts={posts} />
     </SafeAreaView>
   );

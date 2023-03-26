@@ -4,7 +4,7 @@ import SingleComment from "./SingleComment";
 
 const CommentsFlatlist = ({ comments }: any) => {
   const renderComments = (commentData: any) => {
-    let comment = commentData.item;
+    const comment = commentData.item;
     return <SingleComment comment={comment} />;
   };
 

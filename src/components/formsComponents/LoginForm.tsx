@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginValidation } from "../../utils/validation";
 import CustomBtn from "../UI/CustomBtn";
+import { colors } from "../../utils/globalStyles";
 
 const LoginForm = () => {
   const authCtx: AuthContextProps = useContext(AuthContext);
@@ -44,6 +45,7 @@ const LoginForm = () => {
         )}
         title="Sign up"
         fontSize={18}
+        color={colors.lightBlue}
       />
     </View>
   );

@@ -2,32 +2,40 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { fetchAllUsersData } from "../../../hooks/fetchAllUsersData";
 import { AuthContext, AuthContextProps } from "../../../store/auth-context";
-import { useNavigation } from "@react-navigation/native";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
 import { screenWidth } from "../../../utils/dimension";
 import { fetchPost } from "../../../hooks/fetchPost";
 import PostAvatar from "../../UI/PostAvatar";
 import LikeHeart from "../../UI/LikeHeart";
 
-const SinglePost = ({ id }: any) => {
-  const authCtx: AuthContextProps = useContext(AuthContext);
-  const navigation: any = useNavigation();
+interface SinglePostProps {
+  id: number;
+}
 
-  const { post, isLoading }: any = fetchPost(id, true);
-  const { users }: any = fetchAllUsersData(false);
+const SinglePost = ({ id }: SinglePostProps) => {
+  const authCtx: AuthContextProps = useContext(AuthContext);
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+
+  const { post, isLoading } = fetchPost(id, true);
+  const { users } = fetchAllUsersData(false);
   if (isLoading) {
     return null;
   }
 
-  const postData = post?.data;
-  const postLikes = postData.likes;
-  const lastComment = postData.comments[postData.comments.length - 1];
+  const postData: any = post?.data;
+  const postLikes: any = postData.likes;
+  const lastComment: any = postData.comments[postData.comments.length - 1];
 
   const postOwner: any = users?.find(
     (user: any) => user.uuid === postData.creator_uuid
   );
   const ownPost: boolean = postData.creator_uuid === authCtx.loggedUserId;
-  const countLikes = postLikes.length;
-  const ownLike = postLikes.find(
+  const countLikes: number = postLikes.length;
+  const ownLike: any = postLikes.find(
     (like: any) => like.creator_uuid === authCtx.loggedUserId
   );
 

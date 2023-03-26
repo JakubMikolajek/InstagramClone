@@ -1,7 +1,11 @@
 import React from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { screenWidth } from "../../../utils/dimension";
-import { useNavigation } from "@react-navigation/native";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
 import { fetchPost } from "../../../hooks/fetchPost";
 
 interface SingleGridProps {
@@ -9,14 +13,14 @@ interface SingleGridProps {
 }
 
 const SingleGridPost = ({ id }: SingleGridProps) => {
-  const navigation: any = useNavigation();
-  const { post, isLoading }: any = fetchPost(id, true);
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const { post, isLoading } = fetchPost(id, true);
 
   if (isLoading) {
     return null;
   }
 
-  const postData = post?.data;
+  const postData: any = post?.data;
 
   const goToPostDetail = () => {
     navigation.navigate("PostDetail", {

@@ -1,8 +1,12 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import Icon from "./Icon";
 import { colors } from "../../utils/globalStyles";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { createLike, deleteLike } from "../../supabase/api/postApi";
 
 interface LikeHeartProps {
@@ -11,9 +15,9 @@ interface LikeHeartProps {
 }
 
 const LikeHeart = ({ ownLike, id }: LikeHeartProps) => {
-  const client = useQueryClient();
+  const client: QueryClient = useQueryClient();
   const addLikeMutation = useMutation({
-    mutationFn: () => {
+    mutationFn: (id: number) => {
       return createLike(id);
     },
     onError: () => {
@@ -24,8 +28,8 @@ const LikeHeart = ({ ownLike, id }: LikeHeartProps) => {
     },
   });
   const removeLikeMutation = useMutation({
-    mutationFn: () => {
-      return deleteLike(ownLike.id);
+    mutationFn: (id: number) => {
+      return deleteLike(id);
     },
     onError: () => {
       console.log("Error");
@@ -34,8 +38,8 @@ const LikeHeart = ({ ownLike, id }: LikeHeartProps) => {
       await client.invalidateQueries(["posts", id]);
     },
   });
-  const addLike = () => addLikeMutation.mutate();
-  const removeLike = () => removeLikeMutation.mutate();
+  const addLike = () => addLikeMutation.mutate(id);
+  const removeLike = () => removeLikeMutation.mutate(ownLike.id);
   return (
     <TouchableOpacity onPress={ownLike ? removeLike : addLike}>
       <Icon
@@ -48,5 +52,3 @@ const LikeHeart = ({ ownLike, id }: LikeHeartProps) => {
 };
 
 export default LikeHeart;
-
-const styles = StyleSheet.create({});

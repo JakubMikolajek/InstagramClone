@@ -6,10 +6,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerValidation } from "../../utils/validation";
 import InputController from "../UI/InputController";
 import CustomBtn from "../UI/CustomBtn";
-import { useNavigation } from "@react-navigation/native";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
+import { colors } from "../../utils/globalStyles";
 
 const RegisterForm = () => {
-  const navigation: any = useNavigation();
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   const authCtx: AuthContextProps = useContext(AuthContext);
   const {
     control,
@@ -60,6 +65,7 @@ const RegisterForm = () => {
         )}
         title="Sign in"
         fontSize={18}
+        color={colors.lightBlue}
       />
     </View>
   );

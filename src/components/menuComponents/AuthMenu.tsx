@@ -13,7 +13,7 @@ import PostDetailScreen from "../../screens/PostDetailScreen";
 import ProfileScreen from "../../screens/ProfileScreen";
 import EditUserDataScreen from "../../screens/EditUserDataScreen";
 
-const queryClient = new QueryClient();
+const queryClient: QueryClient = new QueryClient();
 const Stack = createStackNavigator<ParamListBase>();
 const Tabs = createBottomTabNavigator<ParamListBase>();
 

@@ -5,21 +5,29 @@ import CustomBtn from "../UI/CustomBtn";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { editProfileValidation } from "../../utils/validation";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { updateProfile } from "../../supabase/api/userApi";
 import { AuthContext, AuthContextProps } from "../../store/auth-context";
-import { useNavigation } from "@react-navigation/native";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { decode } from "base64-arraybuffer";
 import { supabaseClient } from "../../supabase/supabase";
 import { colors } from "../../utils/globalStyles";
 
 const EditProfileForm = ({ refetch, route }: any) => {
-  const [url, setUrl] = useState<any>(route.params?.imageUrl);
+  const [url, setUrl] = useState<string>(route.params?.imageUrl);
   const [update, setUpdate] = useState<boolean>(false);
   const authCtx: AuthContextProps = useContext(AuthContext);
-  const client = useQueryClient();
-  const navigation: any = useNavigation();
+  const client: QueryClient = useQueryClient();
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   const {
     control,
     handleSubmit,
@@ -33,7 +41,7 @@ const EditProfileForm = ({ refetch, route }: any) => {
   });
 
   const uploadImage = async (image: any, userId: any) => {
-    const imageId = Date.now().toString() + userId;
+    const imageId: string = Date.now().toString() + userId;
     await supabaseClient.storage
       .from("images")
       .upload(`${userId}/${imageId}.png`, decode(image), {
@@ -47,7 +55,7 @@ const EditProfileForm = ({ refetch, route }: any) => {
 
   const pickImage = async () => {
     setUpdate(true);
-    let res = await ImagePicker.launchImageLibraryAsync({
+    const res = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
@@ -80,7 +88,7 @@ const EditProfileForm = ({ refetch, route }: any) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <Image style={styles.image} source={{ uri: route.params.imageUrl }} />
+        <Image style={styles.image} source={{ uri: url }} />
         <InputController
           control={control}
           errors={errors.name}
@@ -104,12 +112,14 @@ const EditProfileForm = ({ refetch, route }: any) => {
             title="Save"
             fontSize={18}
             margin={4}
+            color={colors.lightBlue}
           />
           <CustomBtn
             onPress={pickImage}
             title="Pick Image"
             fontSize={14}
             margin={4}
+            color={colors.lightBlue}
           />
         </View>
       )}

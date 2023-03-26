@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext, AuthContextProps } from "../../../store/auth-context";
 import { fetchAllUsersData } from "../../../hooks/fetchAllUsersData";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { screenWidth } from "../../../utils/dimension";
 import { fetchPost } from "../../../hooks/fetchPost";
@@ -11,27 +10,30 @@ import LikeHeart from "../../UI/LikeHeart";
 import Icon from "../../UI/Icon";
 import { colors } from "../../../utils/globalStyles";
 import CommentForm from "../../formsComponents/CommentForm";
+import DeletePostBtn from "../../UI/DeletePostBtn";
 
-const PostDetail = ({ id }: any) => {
+interface PostDetailProps {
+  id: number;
+}
+
+const PostDetail = ({ id }: PostDetailProps) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
-  const { post }: any = fetchPost(id, false);
+  const { post } = fetchPost(id, false);
   const { users } = fetchAllUsersData(false);
-  const postData = post?.data;
-  const postLikes = postData.likes;
-  const postComments = postData.comments;
+  const postData: any = post?.data;
+  const postLikes: any = postData.likes;
+  const postComments: any = postData.comments;
   const postOwner: any = users?.find(
     (user: any) => user.uuid === postData.creator_uuid
   );
   const ownPost: boolean = postData.creator_uuid === authCtx.loggedUserId;
-  const ownLike = postLikes.find(
+  const ownLike: any = postLikes.find(
     (like: any) => like.creator_uuid === authCtx.loggedUserId
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image style={styles.image} source={{ uri: postData.image_url }} />
-      </View>
+    <View style={styles.container}>
+      <Image style={styles.image} source={{ uri: postData.image_url }} />
       <View style={styles.postDetailContainer}>
         <Text style={styles.center}>Title: {postData.description}</Text>
         <View style={styles.flexRow}>
@@ -41,19 +43,17 @@ const PostDetail = ({ id }: any) => {
             image_url={postOwner.image_url}
             pressable={false}
           />
-          <View>
-            {ownPost ? null : <LikeHeart ownLike={ownLike} id={id} />}
-          </View>
+          {ownPost ? (
+            <DeletePostBtn id={id} />
+          ) : (
+            <LikeHeart ownLike={ownLike} id={id} />
+          )}
         </View>
         <View style={styles.flexRowAlt}>
-          <View style={styles.flexRowAlt}>
-            <Icon name="heart" size={25} color={colors.lightBlue} />
-            <Text>Likes: {postLikes.length}</Text>
-          </View>
-          <View style={styles.flexRowAlt}>
-            <Icon name="chatbubble" size={25} color={colors.lightBlue} />
-            <Text>Comments: {postComments.length}</Text>
-          </View>
+          <Icon name="heart" size={25} color={colors.lightBlue} />
+          <Text>Likes: {postLikes.length}</Text>
+          <Icon name="chatbubble" size={25} color={colors.lightBlue} />
+          <Text>Comments: {postComments.length}</Text>
         </View>
         <View style={styles.commentsContainer}>
           {!postComments.length ? (
@@ -68,7 +68,7 @@ const PostDetail = ({ id }: any) => {
           <CommentForm id={id} />
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -99,10 +99,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   image: {
-    height: screenWidth,
-    width: screenWidth,
-  },
-  imageContainer: {
     flex: 1,
     height: screenWidth,
     width: screenWidth,

@@ -7,16 +7,16 @@ import Avatar from "../components/UI/Avatar";
 import { fetchUserData } from "../hooks/fetchUserData";
 import PostGridList from "../components/postsComponents/postGridList/PostGridList";
 import { fetchUserPosts } from "../hooks/fetchUserPosts";
+import { AvatarProps } from "../types/types";
+import { colors } from "../utils/globalStyles";
 
 const OwnProfileScreen = () => {
   const authCtx: AuthContextProps = useContext(AuthContext);
   const { user } = fetchUserData(authCtx.loggedUserId, false);
-
   const { posts } = fetchUserPosts(authCtx.loggedUserId, false);
-
   const loggedUser = user;
 
-  const avatarProps = {
+  const avatarProps: AvatarProps = {
     first_name: loggedUser?.first_name,
     last_name: loggedUser?.last_name,
     image_url: loggedUser?.image_url,
@@ -30,6 +30,7 @@ const OwnProfileScreen = () => {
           onPress={() => authCtx.logout()}
           title="Logout"
           fontSize={16}
+          color={colors.lightBlue}
         />
       </View>
       <View style={styles.postsContainer}>

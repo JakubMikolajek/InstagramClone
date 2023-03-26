@@ -3,12 +3,14 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   StyleSheet,
   TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/UI/Header";
 import RegisterForm from "../components/formsComponents/RegisterForm";
+import { screenHeight, screenWidth } from "../utils/dimension";
 
 const RegisterScreen = () => {
   return (
@@ -16,12 +18,14 @@ const RegisterScreen = () => {
       style={styles.outerContainer}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={styles.container}>
-          <Header title="Register" />
-          <RegisterForm />
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
+      <ScrollView>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <SafeAreaView style={styles.container}>
+            <Header title="Register" />
+            <RegisterForm />
+          </SafeAreaView>
+        </TouchableWithoutFeedback>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -32,7 +36,9 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     flex: 1,
+    height: screenHeight,
     justifyContent: "center",
+    width: screenWidth,
   },
   outerContainer: {
     flex: 1,

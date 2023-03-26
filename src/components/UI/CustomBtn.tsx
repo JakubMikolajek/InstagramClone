@@ -7,14 +7,22 @@ interface ButtonProps {
   title: string;
   fontSize: number;
   margin?: number;
+  color: string;
 }
 
-const CustomBtn = ({ onPress, title, fontSize, margin }: ButtonProps) => {
+const CustomBtn = ({
+  onPress,
+  title,
+  fontSize,
+  margin,
+  color,
+}: ButtonProps) => {
   const font = {
     fontSize: fontSize,
   };
   const style = {
     margin: margin,
+    backgroundColor: color,
   };
 
   return (

@@ -48,6 +48,7 @@ const AuthContextProvider = ({ children }: AuthContextProvider) => {
   const logout = async () => {
     return await supabaseClient.auth.signOut().then(async () => {
       setIsAuth(false);
+      setLoggedUserId("");
     });
   };
 

@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 import { fetchAllUsersData } from "../../../hooks/fetchAllUsersData";
 import SingleUser from "./SingleUser";
 import { AuthContext } from "../../../store/auth-context";
 import { colors } from "../../../utils/globalStyles";
 import { screenWidth } from "../../../utils/dimension";
 
-const UsersList = () => {
+const UsersList = ({ isRefetching, refetch }: any) => {
   const authCtx = useContext(AuthContext);
   const { users } = fetchAllUsersData(true);
 
-  users?.forEach((user, i) => {
+  users?.forEach((user: any, i: any) => {
     if (user.uuid === authCtx.loggedUserId) {
       users?.splice(i, 1);
       users?.unshift(user);
@@ -36,6 +36,9 @@ const UsersList = () => {
         renderItem={renderUser}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
       />
     </View>
   );

@@ -16,7 +16,8 @@ const EditUserDataScreen = ({ route }: any) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
   const { user, refetch } = fetchUserData(authCtx.loggedUserId, false);
 
-  const emptyUser = !user?.first_name || !user?.last_name || !user?.image_url;
+  const emptyUser: boolean =
+    !user?.first_name || !user?.last_name || !user?.image_url;
 
   return (
     <KeyboardAvoidingView

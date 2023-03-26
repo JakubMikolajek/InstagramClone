@@ -1,7 +1,15 @@
 import React, { useContext, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigation } from "@react-navigation/native";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createPostValidation } from "../../utils/validation";
@@ -15,11 +23,11 @@ import { supabaseClient } from "../../supabase/supabase";
 import { decode } from "base64-arraybuffer";
 
 const CreatePostForm = () => {
-  const [url, setUrl] = useState<any>("");
+  const [url, setUrl] = useState<string>("");
   const [update, setUpdate] = useState<boolean>(false);
   const authCtx: AuthContextProps = useContext(AuthContext);
-  const client = useQueryClient();
-  const navigation: any = useNavigation();
+  const client: QueryClient = useQueryClient();
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   const {
     control,
     handleSubmit,
@@ -32,7 +40,7 @@ const CreatePostForm = () => {
   });
 
   const uploadImage = async (image: any, userId: any) => {
-    const imageId = Date.now().toString() + userId;
+    const imageId: string = Date.now().toString() + userId;
     await supabaseClient.storage
       .from("images")
       .upload(`${userId}/${imageId}.png`, decode(image), {
@@ -46,7 +54,7 @@ const CreatePostForm = () => {
 
   const pickImage = async () => {
     setUpdate(true);
-    let res = await ImagePicker.launchImageLibraryAsync({
+    const res = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
@@ -110,8 +118,18 @@ const CreatePostForm = () => {
         />
         {update ? null : (
           <View style={styles.btnContainer}>
-            <CustomBtn onPress={pickImage} title="Pick photo" fontSize={14} />
-            <CustomBtn onPress={testHandler} title="Take photo" fontSize={14} />
+            <CustomBtn
+              onPress={pickImage}
+              title="Pick photo"
+              fontSize={14}
+              color={colors.lightBlue}
+            />
+            <CustomBtn
+              onPress={testHandler}
+              title="Take photo"
+              fontSize={14}
+              color={colors.lightBlue}
+            />
           </View>
         )}
       </View>
@@ -122,6 +140,7 @@ const CreatePostForm = () => {
           onPress={handleSubmit((values) => mutation.mutate(values))}
           title="Create Post"
           fontSize={18}
+          color={colors.lightBlue}
         />
       )}
     </View>

@@ -4,20 +4,24 @@ import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  Text,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import CustomBtn from "../UI/CustomBtn";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createCommentValidation } from "../../utils/validation";
 import InputController from "../UI/InputController";
 import { createComment } from "../../supabase/api/postApi";
+import { colors } from "../../utils/globalStyles";
 
 const CommentForm = ({ id }: any) => {
-  const client = useQueryClient();
+  const client: QueryClient = useQueryClient();
   const {
     control,
     handleSubmit,
@@ -60,6 +64,7 @@ const CommentForm = ({ id }: any) => {
             )}
             title="Add comment"
             fontSize={14}
+            color={colors.lightBlue}
           />
         </View>
       </TouchableWithoutFeedback>

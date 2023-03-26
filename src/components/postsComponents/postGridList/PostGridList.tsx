@@ -2,15 +2,20 @@ import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import SingleGridPost from "./SingleGridPost";
 import { screenWidth } from "../../../utils/dimension";
+import { RenderPostProps } from "../../../types/types";
 
 interface PostGridListProps {
   posts: any;
 }
 
 const PostGridList = ({ posts }: PostGridListProps) => {
-  const renderGridPost = (postData: any) => (
-    <SingleGridPost id={postData.item.id} />
-  );
+  const renderGridPost = (postData: any) => {
+    const item: any = postData.item;
+    const postProps: RenderPostProps = {
+      id: item.id,
+    };
+    return <SingleGridPost {...postProps} />;
+  };
 
   return (
     <View style={styles.flatList}>
