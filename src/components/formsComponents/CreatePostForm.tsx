@@ -32,6 +32,7 @@ const CreatePostForm = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(createPostValidation),
     defaultValues: {
@@ -83,7 +84,7 @@ const CreatePostForm = () => {
   //     }
   // }
 
-  const mutation = useMutation({
+  const createPostMutation = useMutation({
     mutationFn: (data: any) => {
       return createPost(data.description, url);
     },
@@ -95,6 +96,12 @@ const CreatePostForm = () => {
       navigation.navigate("OwnProfile");
     },
   });
+
+  const addPost = async (data: any) => {
+    await createPostMutation.mutate(data);
+    await reset();
+    await setUrl("");
+  };
 
   const testHandler = () => {
     console.log("Test");
@@ -137,7 +144,7 @@ const CreatePostForm = () => {
         <Text>Sending your photo. Please wait...</Text>
       ) : (
         <CustomBtn
-          onPress={handleSubmit((values) => mutation.mutate(values))}
+          onPress={handleSubmit((values) => addPost(values))}
           title="Create Post"
           fontSize={18}
           color={colors.lightBlue}

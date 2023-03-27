@@ -70,7 +70,7 @@ const EditProfileForm = ({ refetch, route }: any) => {
     setUpdate(false);
   };
 
-  const mutation = useMutation({
+  const updateDataMutation = useMutation({
     mutationFn: (data: any) => {
       return updateProfile(authCtx.loggedUserId, data.name, data.surname, url);
     },
@@ -84,6 +84,10 @@ const EditProfileForm = ({ refetch, route }: any) => {
       navigation.goBack();
     },
   });
+
+  const editProfile = (data: any) => {
+    updateDataMutation.mutate(data);
+  };
 
   return (
     <View style={styles.container}>
@@ -108,7 +112,7 @@ const EditProfileForm = ({ refetch, route }: any) => {
       ) : (
         <View>
           <CustomBtn
-            onPress={handleSubmit((values) => mutation.mutate(values))}
+            onPress={handleSubmit((values) => editProfile(values))}
             title="Save"
             fontSize={18}
             margin={4}

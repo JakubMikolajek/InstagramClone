@@ -14,6 +14,7 @@ const LoginForm = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(loginValidation),
     defaultValues: {
@@ -21,6 +22,12 @@ const LoginForm = () => {
       password: "",
     },
   });
+
+  const login = async (email: string, password: string) => {
+    await authCtx.login(email, password);
+    await reset();
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -40,9 +47,7 @@ const LoginForm = () => {
         />
       </View>
       <CustomBtn
-        onPress={handleSubmit((values) =>
-          authCtx.login(values.email, values.password)
-        )}
+        onPress={handleSubmit((values) => login(values.email, values.password))}
         title="Sign up"
         fontSize={18}
         color={colors.lightBlue}

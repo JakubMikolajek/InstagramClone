@@ -26,6 +26,7 @@ const CommentForm = ({ id }: any) => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(createCommentValidation),
     defaultValues: {
@@ -45,6 +46,11 @@ const CommentForm = ({ id }: any) => {
     },
   });
 
+  const addComment = async (data: any) => {
+    await addCommentMutation.mutate(data);
+    await reset();
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.outerContainer}
@@ -59,9 +65,7 @@ const CommentForm = ({ id }: any) => {
             name="body"
           />
           <CustomBtn
-            onPress={handleSubmit((values) =>
-              addCommentMutation.mutate(values)
-            )}
+            onPress={handleSubmit((values) => addComment(values))}
             title="Add comment"
             fontSize={14}
             color={colors.lightBlue}

@@ -20,6 +20,7 @@ const RegisterForm = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(registerValidation),
     defaultValues: {
@@ -29,9 +30,10 @@ const RegisterForm = () => {
     },
   });
 
-  const register = (email: string, password: string) => {
-    authCtx.register(email, password);
-    navigation.goBack();
+  const register = async (email: string, password: string) => {
+    await authCtx.register(email, password);
+    await reset();
+    await navigation.goBack();
   };
 
   return (
