@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,7 +12,11 @@ import { fetchUserData } from "../hooks/fetchUserData";
 import { AuthContext, AuthContextProps } from "../store/auth-context";
 import EditProfileForm from "../components/formsComponents/EditProfileForm";
 
-const EditUserDataScreen = ({ route }: any) => {
+interface EditUserDataScreenProps {
+  route: any;
+}
+
+const EditUserDataScreen: FC<EditUserDataScreenProps> = ({ route }) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
   const { user, refetch } = fetchUserData(authCtx.loggedUserId, false);
 

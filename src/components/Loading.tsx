@@ -1,8 +1,8 @@
-import React from "react";
+import React, { FC } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { colors } from "../utils/globalStyles";
 
-const Loading = () => {
+const Loading: FC = () => {
   return (
     <View style={styles.container}>
       <ActivityIndicator size="large" color={colors.lightBlue} />

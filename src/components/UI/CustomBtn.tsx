@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { colors } from "../../utils/globalStyles";
 
@@ -10,13 +10,13 @@ interface ButtonProps {
   color: string;
 }
 
-const CustomBtn = ({
+const CustomBtn: FC<ButtonProps> = ({
   onPress,
   title,
   fontSize,
   margin,
   color,
-}: ButtonProps) => {
+}) => {
   const font = {
     fontSize: fontSize,
   };

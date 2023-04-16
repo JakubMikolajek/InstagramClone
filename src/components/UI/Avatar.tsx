@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../utils/globalStyles";
 import {
@@ -14,12 +14,12 @@ interface AvatarProps {
   pressable: boolean;
 }
 
-const Avatar = ({
+const Avatar: FC<AvatarProps> = ({
   first_name,
   last_name,
   image_url,
   pressable,
-}: AvatarProps) => {
+}) => {
   const navigation: NavigationProp<ParamListBase> = useNavigation();
   return (
     <View style={styles.container}>

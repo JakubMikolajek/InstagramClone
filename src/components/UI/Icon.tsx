@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
 interface IconProps {
@@ -7,7 +7,7 @@ interface IconProps {
   color: string;
 }
 
-const Icon = ({ name, size, color }: IconProps) => {
+const Icon: FC<IconProps> = ({ name, size, color }) => {
   return <Ionicons name={name} size={size} color={color} />;
 };
 

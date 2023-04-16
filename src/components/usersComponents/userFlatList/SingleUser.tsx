@@ -1,5 +1,9 @@
-import React, { useContext } from "react";
-import { useNavigation } from "@react-navigation/native";
+import React, { FC, useContext } from "react";
+import {
+  NavigationProp,
+  ParamListBase,
+  useNavigation,
+} from "@react-navigation/native";
 import { AuthContext, AuthContextProps } from "../../../store/auth-context";
 import AvatarAlt from "../../UI/AvatarAlt";
 
@@ -10,14 +14,14 @@ interface SingleUserProps {
   uuid: string;
 }
 
-const SingleUser = ({
+const SingleUser: FC<SingleUserProps> = ({
   first_name,
   last_name,
   image_url,
   uuid,
-}: SingleUserProps) => {
+}) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
-  const navigation: any = useNavigation();
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   const goToUserProfileHandler = () => {
     if (authCtx.loggedUserId === uuid) {
       navigation.navigate("OwnProfile");

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { TouchableOpacity } from "react-native";
 import Icon from "./Icon";
 import { colors } from "../../utils/globalStyles";
@@ -14,7 +14,7 @@ interface LikeHeartProps {
   id: number;
 }
 
-const LikeHeart = ({ ownLike, id }: LikeHeartProps) => {
+const LikeHeart: FC<LikeHeartProps> = ({ ownLike, id }) => {
   const client: QueryClient = useQueryClient();
   const addLikeMutation = useMutation({
     mutationFn: (id: number) => {

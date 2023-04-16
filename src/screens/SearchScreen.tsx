@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -9,7 +9,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchResult from "../components/searchComponents/SearchResult";
 
-const SearchScreen = () => {
+const SearchScreen: FC = () => {
   return (
     <KeyboardAvoidingView
       style={styles.outerContainer}

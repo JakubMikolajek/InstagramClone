@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface PostAvatarProps {
@@ -9,13 +9,13 @@ interface PostAvatarProps {
   pressable: boolean;
 }
 
-const PostAvatar = ({
+const PostAvatar: FC<PostAvatarProps> = ({
   first_name,
   last_name,
   image_url,
   onPress,
   pressable,
-}: PostAvatarProps) => {
+}) => {
   return (
     <View>
       {pressable ? (

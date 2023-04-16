@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import {
   NavigationProp,
@@ -12,7 +12,7 @@ interface SingleGridPostAltProps {
   image_url: string;
 }
 
-const SingleGridPostAlt = ({ id, image_url }: SingleGridPostAltProps) => {
+const SingleGridPostAlt: FC<SingleGridPostAltProps> = ({ id, image_url }) => {
   const navigation: NavigationProp<ParamListBase> = useNavigation();
   const goToPostDetail = () => {
     navigation.navigate("PostDetail", {

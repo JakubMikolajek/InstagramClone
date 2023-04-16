@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { KeyboardTypeOptions, StyleSheet, Text, View } from "react-native";
 import { Controller } from "react-hook-form";
 import Input from "./Input";
@@ -14,14 +14,14 @@ interface InputControllerProps {
   secureTextEntry?: boolean | undefined;
 }
 
-const InputController = ({
+const InputController: FC<InputControllerProps> = ({
   control,
   errors,
   placeholder,
   name,
   keyboardType,
   secureTextEntry,
-}: InputControllerProps) => {
+}) => {
   return (
     <View style={styles.container}>
       <Controller

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { colors } from "../../utils/globalStyles";
 
@@ -9,12 +9,12 @@ interface AvatarAltProps {
   onPress: () => void;
 }
 
-const AvatarAlt = ({
+const AvatarAlt: FC<AvatarAltProps> = ({
   first_name,
   last_name,
   image_url,
   onPress,
-}: AvatarAltProps) => {
+}) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image source={{ uri: image_url }} style={styles.image} />

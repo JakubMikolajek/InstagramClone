@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -19,7 +19,7 @@ interface LoginScreenProps {
   navigation: NavigationProp<ParamListBase>;
 }
 
-const LoginScreen = ({ navigation }: LoginScreenProps) => {
+const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   return (
     <KeyboardAvoidingView
       style={styles.outerContainer}

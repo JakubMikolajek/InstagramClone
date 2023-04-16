@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { StyleSheet, Switch, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { fetchAllUsersData } from "../hooks/fetchAllUsersData";
@@ -9,9 +9,13 @@ import Loading from "../components/Loading";
 import PostsList from "../components/postsComponents/postFlatList/PostsList";
 import { AvatarProps } from "../types/types";
 
-const ProfileScreen = ({ route }: any) => {
+interface ProfileScreenProps {
+  route: any;
+}
+
+const ProfileScreen: FC<ProfileScreenProps> = ({ route }) => {
   const [enable, setEnable] = useState<boolean>(false);
-  const toggleSwitch = () => setEnable((prevState) => !prevState);
+  const toggleSwitch = () => setEnable((prevState: boolean) => !prevState);
   const user_id: string = route.params.uuid;
   const { users } = fetchAllUsersData(false);
   const { posts, isLoading } = fetchUserPosts(user_id, true);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import SinglePost from "./SinglePost";
 import { RenderPostProps } from "../../../types/types";
@@ -7,7 +7,7 @@ interface PostsListProps {
   posts: any;
 }
 
-const PostsList = ({ posts }: PostsListProps) => {
+const PostsList: FC<PostsListProps> = ({ posts }) => {
   const renderPost = (postData: any) => {
     const item: any = postData.item;
     const postProps: RenderPostProps = {

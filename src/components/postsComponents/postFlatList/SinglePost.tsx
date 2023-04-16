@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import { fetchAllUsersData } from "../../../hooks/fetchAllUsersData";
 import { AuthContext, AuthContextProps } from "../../../store/auth-context";
@@ -16,7 +16,7 @@ interface SinglePostProps {
   id: number;
 }
 
-const SinglePost = ({ id }: SinglePostProps) => {
+const SinglePost: FC<SinglePostProps> = ({ id }) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 

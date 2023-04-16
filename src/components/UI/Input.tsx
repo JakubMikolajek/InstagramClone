@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   KeyboardTypeOptions,
   StyleSheet,
@@ -19,7 +19,7 @@ interface InputProps {
   errors: any;
 }
 
-const Input = ({
+const Input: FC<InputProps> = ({
   placeholder,
   onBlur,
   onChange,
@@ -27,7 +27,7 @@ const Input = ({
   keyboardType,
   secureTextEntry,
   errors,
-}: InputProps) => {
+}) => {
   return (
     <View style={styles.container}>
       <Text style={[styles.text, errors && styles.textInvalid]}>

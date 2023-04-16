@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { AuthContext, AuthContextProps } from "../../store/auth-context";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerValidation } from "../../utils/validation";
 import InputController from "../UI/InputController";
@@ -13,7 +13,7 @@ import {
 } from "@react-navigation/native";
 import { colors } from "../../utils/globalStyles";
 
-const RegisterForm = () => {
+const RegisterForm: FC = () => {
   const navigation: NavigationProp<ParamListBase> = useNavigation();
   const authCtx: AuthContextProps = useContext(AuthContext);
   const {
@@ -62,7 +62,7 @@ const RegisterForm = () => {
         />
       </View>
       <CustomBtn
-        onPress={handleSubmit((values) =>
+        onPress={handleSubmit((values: FieldValues) =>
           register(values.email, values.password)
         )}
         title="Sign in"

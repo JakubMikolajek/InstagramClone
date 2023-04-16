@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,7 +12,7 @@ import Header from "../components/UI/Header";
 import RegisterForm from "../components/formsComponents/RegisterForm";
 import { screenHeight, screenWidth } from "../utils/dimension";
 
-const RegisterScreen = () => {
+const RegisterScreen: FC = () => {
   return (
     <KeyboardAvoidingView
       style={styles.outerContainer}

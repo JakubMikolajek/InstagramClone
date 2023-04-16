@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { AuthContext, AuthContextProps } from "../../../store/auth-context";
 import { fetchAllUsersData } from "../../../hooks/fetchAllUsersData";
 import { Image, StyleSheet, Text, View } from "react-native";
@@ -16,7 +16,7 @@ interface PostDetailProps {
   id: number;
 }
 
-const PostDetail = ({ id }: PostDetailProps) => {
+const PostDetail: FC<PostDetailProps> = ({ id }) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
   const { post } = fetchPost(id, false);
   const { users } = fetchAllUsersData(false);

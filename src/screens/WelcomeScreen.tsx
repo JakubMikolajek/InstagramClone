@@ -1,10 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import { StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomBtn from "../components/UI/CustomBtn";
 import { colors } from "../utils/globalStyles";
 
-const WelcomeScreen = ({ navigation }: any) => {
+interface WelcomeScreenProps {
+  navigation: any;
+}
+
+const WelcomeScreen: FC<WelcomeScreenProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Welcome</Text>

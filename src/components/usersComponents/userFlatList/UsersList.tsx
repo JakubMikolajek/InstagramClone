@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 import { fetchAllUsersData } from "../../../hooks/fetchAllUsersData";
 import SingleUser from "./SingleUser";
@@ -6,7 +6,12 @@ import { AuthContext } from "../../../store/auth-context";
 import { colors } from "../../../utils/globalStyles";
 import { screenWidth } from "../../../utils/dimension";
 
-const UsersList = ({ isRefetching, refetch }: any) => {
+interface UserListProps {
+  isRefetching: any;
+  refetch: any;
+}
+
+const UsersList: FC<UserListProps> = ({ isRefetching, refetch }) => {
   const authCtx = useContext(AuthContext);
   const { users } = fetchAllUsersData(true);
 

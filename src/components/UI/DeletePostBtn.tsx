@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import CustomBtn from "./CustomBtn";
 import {
   QueryClient,
@@ -17,7 +17,7 @@ interface DeletePostBtnProps {
   id: number;
 }
 
-const DeletePostBtn = ({ id }: DeletePostBtnProps) => {
+const DeletePostBtn: FC<DeletePostBtnProps> = ({ id }) => {
   const postId: number = id;
   const client: QueryClient = useQueryClient();
   const navigation: NavigationProp<ParamListBase> = useNavigation();

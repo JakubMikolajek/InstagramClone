@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomBtn from "../components/UI/CustomBtn";
@@ -10,7 +10,7 @@ import { fetchUserPosts } from "../hooks/fetchUserPosts";
 import { AvatarProps } from "../types/types";
 import { colors } from "../utils/globalStyles";
 
-const OwnProfileScreen = () => {
+const OwnProfileScreen: FC = () => {
   const authCtx: AuthContextProps = useContext(AuthContext);
   const { user } = fetchUserData(authCtx.loggedUserId, false);
   const { posts } = fetchUserPosts(authCtx.loggedUserId, false);

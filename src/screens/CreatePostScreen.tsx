@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -10,7 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/UI/Header";
 import CreatePostForm from "../components/formsComponents/CreatePostForm";
 
-const CreatePostScreen = () => {
+const CreatePostScreen: FC = () => {
   return (
     <KeyboardAvoidingView
       style={styles.outerContainer}

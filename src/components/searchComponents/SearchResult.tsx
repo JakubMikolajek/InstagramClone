@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import { fetchAllUsersData } from "../../hooks/fetchAllUsersData";
 import { fetchAllPostsData } from "../../hooks/fetchAllPostsData";
@@ -16,7 +16,7 @@ interface PostProps {
   image_url: string;
 }
 
-const SearchResult = () => {
+const SearchResult: FC = () => {
   const [search, setSearch] = useState<string>("");
   const { users } = fetchAllUsersData(false);
   const { posts } = fetchAllPostsData(false);
@@ -69,7 +69,7 @@ const SearchResult = () => {
             <Text style={styles.boldText}>Users:</Text>
             {resultUsers.length === 0 && (
               <Text style={styles.centerText}>
-                We couldn't find a username with your search term.
+                We couldn&apos;t find a username with your search term.
               </Text>
             )}
             <FlatList
@@ -81,7 +81,7 @@ const SearchResult = () => {
             <Text style={styles.boldText}>Posts:</Text>
             {resultPosts.length === 0 && (
               <Text style={styles.centerText}>
-                We couldn't find a post with your search term.
+                We couldn&apos;t find a post with your search term.
               </Text>
             )}
             <FlatList

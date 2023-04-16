@@ -10,7 +10,7 @@ import {
   ParamListBase,
   useNavigation,
 } from "@react-navigation/native";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createPostValidation } from "../../utils/validation";
 import InputController from "../UI/InputController";
@@ -25,6 +25,7 @@ import { decode } from "base64-arraybuffer";
 const CreatePostForm = () => {
   const [url, setUrl] = useState<string>("");
   const [update, setUpdate] = useState<boolean>(false);
+  const [status, requestPermission] = ImagePicker.useCameraPermissions();
   const authCtx: AuthContextProps = useContext(AuthContext);
   const client: QueryClient = useQueryClient();
   const navigation: NavigationProp<ParamListBase> = useNavigation();
@@ -70,19 +71,23 @@ const CreatePostForm = () => {
     setUpdate(false);
   };
 
-  // const takePhoto = async () => {
-  //     let res = await ImagePicker.launchCameraAsync({
-  //         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //         allowsEditing: true,
-  //         aspect: [1, 1],
-  //         quality: 0.5,
-  //         base64: true
-  //     })
-  //
-  //     if (!res.canceled){
-  //         console.log(res.assets[0])
-  //     }
-  // }
+  //Not working on Samsung S21FE and other phones with Android 13 or newer in futures
+  const takePhoto = async () => {
+    if (status && !status.granted) {
+      await requestPermission();
+    }
+    let res = await ImagePicker.launchCameraAsync({
+      aspect: [1, 1],
+      quality: 0.5,
+      base64: true,
+    });
+
+    if (!res.canceled) {
+      await uploadImage(res.assets[0].base64, authCtx.loggedUserId);
+      setUpdate(false);
+    }
+    setUpdate(false);
+  };
 
   const createPostMutation = useMutation({
     mutationFn: (data: any) => {
@@ -101,10 +106,6 @@ const CreatePostForm = () => {
     await createPostMutation.mutate(data);
     await reset();
     await setUrl("");
-  };
-
-  const testHandler = () => {
-    console.log("Test");
   };
 
   return (
@@ -132,7 +133,7 @@ const CreatePostForm = () => {
               color={colors.lightBlue}
             />
             <CustomBtn
-              onPress={testHandler}
+              onPress={takePhoto}
               title="Take photo"
               fontSize={14}
               color={colors.lightBlue}
@@ -144,7 +145,7 @@ const CreatePostForm = () => {
         <Text>Sending your photo. Please wait...</Text>
       ) : (
         <CustomBtn
-          onPress={handleSubmit((values) => addPost(values))}
+          onPress={handleSubmit((values: FieldValues) => addPost(values))}
           title="Create Post"
           fontSize={18}
           color={colors.lightBlue}

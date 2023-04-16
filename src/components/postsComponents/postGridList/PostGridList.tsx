@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import SingleGridPost from "./SingleGridPost";
 import { screenWidth } from "../../../utils/dimension";
@@ -8,7 +8,7 @@ interface PostGridListProps {
   posts: any;
 }
 
-const PostGridList = ({ posts }: PostGridListProps) => {
+const PostGridList: FC<PostGridListProps> = ({ posts }) => {
   const renderGridPost = (postData: any) => {
     const item: any = postData.item;
     const postProps: RenderPostProps = {

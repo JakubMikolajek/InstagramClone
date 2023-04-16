@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -13,14 +13,18 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createCommentValidation } from "../../utils/validation";
 import InputController from "../UI/InputController";
 import { createComment } from "../../supabase/api/postApi";
 import { colors } from "../../utils/globalStyles";
 
-const CommentForm = ({ id }: any) => {
+interface CommentFormProps {
+  id: number;
+}
+
+const CommentForm: FC<CommentFormProps> = ({ id }) => {
   const client: QueryClient = useQueryClient();
   const {
     control,
@@ -65,7 +69,7 @@ const CommentForm = ({ id }: any) => {
             name="body"
           />
           <CustomBtn
-            onPress={handleSubmit((values) => addComment(values))}
+            onPress={handleSubmit((values: FieldValues) => addComment(values))}
             title="Add comment"
             fontSize={14}
             color={colors.lightBlue}

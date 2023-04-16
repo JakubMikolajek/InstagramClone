@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import InputController from "../UI/InputController";
 import CustomBtn from "../UI/CustomBtn";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { editProfileValidation } from "../../utils/validation";
 import {
@@ -22,7 +22,12 @@ import { decode } from "base64-arraybuffer";
 import { supabaseClient } from "../../supabase/supabase";
 import { colors } from "../../utils/globalStyles";
 
-const EditProfileForm = ({ refetch, route }: any) => {
+interface EditProfileFormProps {
+  refetch: any;
+  route: any;
+}
+
+const EditProfileForm: FC<EditProfileFormProps> = ({ refetch, route }) => {
   const [url, setUrl] = useState<string>(route.params?.imageUrl);
   const [update, setUpdate] = useState<boolean>(false);
   const authCtx: AuthContextProps = useContext(AuthContext);
@@ -32,6 +37,7 @@ const EditProfileForm = ({ refetch, route }: any) => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(editProfileValidation),
     defaultValues: {
@@ -85,8 +91,9 @@ const EditProfileForm = ({ refetch, route }: any) => {
     },
   });
 
-  const editProfile = (data: any) => {
-    updateDataMutation.mutate(data);
+  const editProfile = async (data: any) => {
+    await updateDataMutation.mutate(data);
+    await reset();
   };
 
   return (
@@ -112,7 +119,7 @@ const EditProfileForm = ({ refetch, route }: any) => {
       ) : (
         <View>
           <CustomBtn
-            onPress={handleSubmit((values) => editProfile(values))}
+            onPress={handleSubmit((values: FieldValues) => editProfile(values))}
             title="Save"
             fontSize={18}
             margin={4}

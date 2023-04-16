@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthContext, AuthContextProps } from "../store/auth-context";
@@ -11,8 +11,15 @@ import { fetchAllPostsData } from "../hooks/fetchAllPostsData";
 import PostsList from "../components/postsComponents/postFlatList/PostsList";
 import { fetchUserPosts } from "../hooks/fetchUserPosts";
 import { colors } from "../utils/globalStyles";
+import { checkPermission } from "../utils/helpers/checkPermission";
+import { StatusBar } from "expo-status-bar";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
-const DashboardScreen = ({ navigation }: any) => {
+interface DashboardScreenProps {
+  navigation: NavigationProp<ParamListBase>;
+}
+
+const DashboardScreen: FC<DashboardScreenProps> = ({ navigation }) => {
   const authCtx: AuthContextProps = useContext(AuthContext);
 
   const {
@@ -71,11 +78,14 @@ const DashboardScreen = ({ navigation }: any) => {
     refetchUser();
     refetchUsers();
     refetchPosts();
-    refetchUserPosts;
+    refetchUserPosts();
   };
+
+  checkPermission();
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="auto" />
       <UsersList isRefetching={isRefetching} refetch={refetch} />
       <PostsList posts={posts} />
     </SafeAreaView>

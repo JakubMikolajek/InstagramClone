@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import PostDetail from "../components/postsComponents/postDetail/PostDetail";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import { screenHeight, screenWidth } from "../utils/dimension";
 
-const PostDetailScreen = ({ route }: any) => {
+interface PostDetailScreenProps {
+  route: any;
+}
+
+const PostDetailScreen: FC<PostDetailScreenProps> = ({ route }) => {
   const postId: number = route.params.id;
 
   return (

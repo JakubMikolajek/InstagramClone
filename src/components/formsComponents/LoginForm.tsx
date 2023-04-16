@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { AuthContext, AuthContextProps } from "../../store/auth-context";
 import InputController from "../UI/InputController";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginValidation } from "../../utils/validation";
 import CustomBtn from "../UI/CustomBtn";
 import { colors } from "../../utils/globalStyles";
 
-const LoginForm = () => {
+const LoginForm: FC = () => {
   const authCtx: AuthContextProps = useContext(AuthContext);
   const {
     control,
@@ -47,7 +47,9 @@ const LoginForm = () => {
         />
       </View>
       <CustomBtn
-        onPress={handleSubmit((values) => login(values.email, values.password))}
+        onPress={handleSubmit((values: FieldValues) =>
+          login(values.email, values.password)
+        )}
         title="Sign up"
         fontSize={18}
         color={colors.lightBlue}

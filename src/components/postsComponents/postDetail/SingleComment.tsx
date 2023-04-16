@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, useContext } from "react";
 import { StyleSheet, Text, Image, View, TouchableOpacity } from "react-native";
 import { fetchUserData } from "../../../hooks/fetchUserData";
 import Icon from "../../UI/Icon";
@@ -9,15 +9,15 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { deleteComment } from "../../../supabase/api/postApi";
+import { AuthContext, AuthContextProps } from "../../../store/auth-context";
 
-const SingleComment = ({ comment }: any) => {
+interface SingleCommentProps {
+  comment: any;
+}
+
+const SingleComment: FC<SingleCommentProps> = ({ comment }) => {
+  const authCtx: AuthContextProps = useContext(AuthContext);
   const client: QueryClient = useQueryClient();
-  const { user, isLoading } = fetchUserData(comment.creator_uuid, true);
-  if (isLoading) {
-    return null;
-  }
-  const postId: number = comment.id;
-
   const deleteCommentMutation = useMutation({
     mutationFn: (id: number) => {
       return deleteComment(id);
@@ -30,6 +30,13 @@ const SingleComment = ({ comment }: any) => {
     },
   });
 
+  const { user, isLoading } = fetchUserData(comment.creator_uuid, true);
+  if (isLoading) {
+    return null;
+  }
+  const postId: number = comment.id;
+  const ownComment = comment.creator_uuid === authCtx.loggedUserId;
+
   const removeComment = () => deleteCommentMutation.mutate(postId);
 
   return (
@@ -39,9 +46,11 @@ const SingleComment = ({ comment }: any) => {
         <Text>{user?.first_name}: </Text>
         <Text>{comment.body}</Text>
       </View>
-      <TouchableOpacity onPress={removeComment}>
-        <Icon name="trash-outline" size={20} color={colors.red} />
-      </TouchableOpacity>
+      {ownComment ? (
+        <TouchableOpacity onPress={removeComment}>
+          <Icon name="trash-outline" size={20} color={colors.red} />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import { screenWidth } from "../../../utils/dimension";
 import {
@@ -12,7 +12,7 @@ interface SingleGridProps {
   id: number;
 }
 
-const SingleGridPost = ({ id }: SingleGridProps) => {
+const SingleGridPost: FC<SingleGridProps> = ({ id }) => {
   const navigation: NavigationProp<ParamListBase> = useNavigation();
   const { post, isLoading } = fetchPost(id, true);
 
